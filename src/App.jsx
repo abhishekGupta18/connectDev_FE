@@ -1,15 +1,22 @@
 
+import { NavBar } from "./Components/NavBar";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Body } from "./Pages/Body"
+import { Login } from "./Pages/Login";
 
 function App() {
 
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
+
+      <Routes>
+        <Route path="/" element={<Body />} ><Route path="/login" element={<Login />} /></Route>
+
+      </Routes>
+
     </>
   )
 }
 
-export default App
+export default App;
