@@ -10,6 +10,7 @@ export const Login = () => {
 
     const [email, setEmail] = useState("virat@gmail.com");
     const [password, setPassword] = useState("Virat@123")
+    const [error, setError] = useState("")
 
     const navigate = useNavigate()
 
@@ -25,7 +26,8 @@ export const Login = () => {
 
 
         } catch (e) {
-            console.log(e)
+            setError(e.response.data)
+            console.error(e.response.data)
         }
 
 
@@ -57,7 +59,7 @@ export const Login = () => {
                     }} />
 
                 </label>
-
+                <p className="text-red-500">{error}</p>
                 <div className="card-actions justify-end">
                     <button className="btn btn-primary" onClick={handleClick}>Login</button>
                 </div>

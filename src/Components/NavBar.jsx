@@ -1,11 +1,27 @@
-import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
+import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
+import { baseURL } from "../utils/constant"
+import { removeUser } from "../utils/userSlice"
 
 const NavBar = () => {
 
-
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const user = useSelector((store) => store.user)
 
+    const handleLogout = async () => {
+        try {
+
+            const res = await axios.post(baseURL + "/logout", { withCredentials: true })
+            dispatch(removeUser())
+            navigate("/login")
+
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
 
     return <div className="navbar bg-base-100">
@@ -16,14 +32,14 @@ const NavBar = () => {
             <div className="form-control">
                 <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
             </div>
-            <div className="dropdown dropdown-end">
+            {user && <div className="dropdown dropdown-end">
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                    {user && <div className="w-10 rounded-full">
+                    <div className="w-10 rounded-full">
                         <img
                             alt="Tailwind CSS Navbar component"
                             src={user.photoUrl}
                         />
-                    </div>}
+                    </div>
                 </div>
                 <ul
                     tabIndex={0}
@@ -35,11 +51,11 @@ const NavBar = () => {
                         </Link>
                     </li>
                     <li><a>Settings</a></li>
-                    <li><a>Logout</a></li>
+                    <li><a onClick={handleLogout}>Logout</a></li>
                 </ul>
-            </div>
+            </div>}
         </div>
-    </div>
+    </div >
 
 }
 
