@@ -11,7 +11,7 @@ export const Feed = () => {
     const feed = useSelector((store) => store.feed)
 
     const userFeed = async () => {
-        if (feed) return
+
         try {
 
             const res = await axios.get(baseURL + "/feed", { withCredentials: true })
@@ -30,7 +30,7 @@ export const Feed = () => {
     }, [])
 
 
-    return <div>
+    return <div className="flex flex-wrap justify-center space-x-4">
 
         {
             feed && feed.map((card) => <UserCard key={card._id} user={card} />)
