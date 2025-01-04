@@ -20,6 +20,34 @@ export const EditProfile = ({ user }) => {
     const [error, setError] = useState("")
     const [showToast, setShowToast] = useState(false)
 
+    const handleImageChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return
+        const formData = new FormData();
+
+        if (file) {
+
+            formData.append("file", file)
+            formData.append("upload_preset", "connectDev")
+            formData.append('cloud_name', "dmmqvo37i");
+        }
+
+        try {
+
+
+            const response = await axios.post(
+                'https://api.cloudinary.com/v1_1/dmmqvo37i/image/upload',
+                formData
+            );
+
+            setPhotoUrl(response.data.secure_url);
+
+
+        } catch (e) {
+            console.log(e.response || e.message || e)
+        }
+    }
+
     const handleGenderChange = (e) => {
         setGender(e.target.value)
 
@@ -71,9 +99,7 @@ export const EditProfile = ({ user }) => {
                     <span className="label-text">Photourl</span>
 
                 </div>
-                <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" value={photoUrl} onChange={(e) => setPhotoUrl(e.target.value)}
-                />
-
+                <input type="file" accept="image/*" onChange={handleImageChange} />
             </label>
             <label className="form-control w-full max-w-xs">
                 <div className="label">
