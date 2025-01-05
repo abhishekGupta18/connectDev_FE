@@ -7,6 +7,8 @@ import { Feed } from "./Pages/Feed";
 import { Profile } from "./Pages/Profile";
 import { SignUp } from "./Pages/SignUp";
 
+//import { Connections } from "./Pages/Connections";
+
 function App() {
 
 

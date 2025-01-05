@@ -24,8 +24,9 @@ export const SignUp = () => {
         try {
 
             const res = await axios.post(baseURL + "/signup", { firstName, lastName, email, password }, { withCredentials: true })
-            dispatch(addUser(res.data.data))
-            navigate("/")
+            // console.log(res)
+            // dispatch(addUser(res.data.data))
+            navigate("/login")
 
         } catch (e) {
             setError(e.response.data)

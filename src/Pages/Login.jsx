@@ -28,6 +28,7 @@ export const Login = () => {
 
 
         } catch (e) {
+            console.log(e)
             setError(e.response.data)
             console.error(e.response.data)
         }
