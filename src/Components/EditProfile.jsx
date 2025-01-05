@@ -4,8 +4,12 @@ import axios from "axios"
 import { baseURL } from "../utils/constant"
 import { useDispatch } from "react-redux"
 import { addUser } from "../utils/userSlice"
+import { Chips } from "primereact/chips"
+import { FloatLabel } from "primereact/floatlabel";
 
 export const EditProfile = ({ user }) => {
+
+
 
     const dispatch = useDispatch()
 
@@ -15,7 +19,7 @@ export const EditProfile = ({ user }) => {
     const [age, setAge] = useState(user.age)
     const [about, setAbout] = useState(user.about)
     const [gender, setGender] = useState(user.gender)
-    const [skills, setSkills] = useState([])
+    const [skills, setSkills] = useState(user.skills)
 
     const [error, setError] = useState("")
     const [showToast, setShowToast] = useState(false)
@@ -52,6 +56,8 @@ export const EditProfile = ({ user }) => {
         setGender(e.target.value)
 
     }
+
+
 
     const editProfileHandler = async () => {
         try {
@@ -146,6 +152,13 @@ export const EditProfile = ({ user }) => {
                 </div>
 
             </label>
+
+            <div className="card p-fluid bg-white my-10 w-full text-black h-20">
+                <FloatLabel>
+                    <Chips id="username" value={skills} onChange={(e) => setSkills(e.value)} />
+                    <label htmlFor="username">write your skiils and press enter after each skill </label>
+                </FloatLabel>
+            </div>
 
             <p className="text-red-500">{error}</p>
             <div className="card-actions justify-end">

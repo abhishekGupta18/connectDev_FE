@@ -8,13 +8,15 @@ import { baseURL } from "../utils/constant";
 
 export const Login = () => {
 
-    const [email, setEmail] = useState("virat@gmail.com");
-    const [password, setPassword] = useState("Virat@123")
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("")
     const [error, setError] = useState("")
 
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
+
+    const handleNavigate = () => navigate("/signup")
 
     const handleClick = async () => {
 
@@ -63,6 +65,7 @@ export const Login = () => {
                 <div className="card-actions justify-end">
                     <button className="btn btn-primary" onClick={handleClick}>Login</button>
                 </div>
+                <p>Don't have an account ? <span className="cursor-pointer" onClick={handleNavigate}>SignUp</span></p>
             </div>
         </div>
     </>

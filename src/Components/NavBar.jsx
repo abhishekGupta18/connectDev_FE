@@ -16,6 +16,7 @@ const NavBar = () => {
 
             const res = await axios.post(baseURL + "/logout", { withCredentials: true })
             dispatch(removeUser())
+            dispatch(removeFeed())
 
             navigate("/login")
 

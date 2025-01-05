@@ -15,8 +15,9 @@ export const UserCard = ({ user }) => {
                 <h2 className="card-title">{firstName + " " + lastName}</h2>
                 {gender && <p>gender : {gender}</p>}
                 {age && <p> age : {age}</p>}
-                {skills.length > 0 && <h4>skills -</h4>}
-                {skills.length > 0 && skills.map((skill) => <p>{skill}</p>)}
+                {<h4>skills -</h4>}
+                {skills.map((skill, index) => <p key={index}>{skill}</p>)
+                }
                 <p>about : {about}</p>
                 <div className="card-actions flex  justify-centre">
                     <button className="btn btn-secondary">Interested</button>

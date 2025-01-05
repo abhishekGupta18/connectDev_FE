@@ -5,6 +5,7 @@ import { Body } from "./Pages/Body"
 import { Login } from "./Pages/Login";
 import { Feed } from "./Pages/Feed";
 import { Profile } from "./Pages/Profile";
+import { SignUp } from "./Pages/SignUp";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
 
           <Route path="/" element={<Feed />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/signup" element={<SignUp />} />
 
 
         </Route>
