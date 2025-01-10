@@ -30,10 +30,10 @@ export const Connections = () => {
 
             <h1 className="text-4xl text-bold justify-center flex my-4">Connections</h1>
             <div className="flex  flex-col items-center justify-center "> {
-                connections && connections.map((connections) => <div className="my-4 bg-base-300">
+                connections && connections.map((connections) => <div key={connections._id} className="my-4 p-6 bg-base-300">
 
                     <img src={connections.photoUrl} alt="image of user" className="w-20 h-20 m-3 rounded-full " />
-                    <p key={connections._id}>{connections.firstName} {connections.lastName}</p>
+                    <p >{connections.firstName} {connections.lastName}</p>
                     <p>{connections.about}</p>
 
                 </div>)
