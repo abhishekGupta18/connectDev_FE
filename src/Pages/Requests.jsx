@@ -9,7 +9,10 @@ export const Requests = () => {
     console.log(requests)
 
     const getUserRequests = async () => {
+
+
         try {
+
 
             const res = await axios.get(baseURL + "/user/requests/recevied", { withCredentials: true })
             setRequests(res.data.data)
@@ -45,9 +48,13 @@ export const Requests = () => {
             <div className="flex  flex-col items-center justify-center "> {
                 requests && requests.map((request) => <div key={request._id} className="my-4 p-6 bg-base-300">
 
-                    <img src={request.photoUrl} alt="image of user" className="w-20 h-20 m-3 rounded-full " />
-                    <p key={request._id}>{request.firstName} {request.lastName}</p>
-                    <p>{request.about}</p>
+                    <img src={request.fromUserId
+                        .photoUrl} alt="image of user" className="w-20 h-20 m-3 rounded-full " />
+                    <p key={request._id}>{request.fromUserId
+                        .firstName} {request.fromUserId
+                            .lastName}</p>
+                    <p>{request.fromUserId
+                        .about}</p>
                     <div className=" flex gap-4">
                         <button className=" bg-white btn-secondary p-1" onClick={() => handleRequest("accepted", request._id)}>Accept</button>
                         <button className=" bg-white btn-secondary p-1" onClick={() => handleRequest("rejected", request._id)}>Reject</button>

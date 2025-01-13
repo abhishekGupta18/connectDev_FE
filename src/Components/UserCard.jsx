@@ -1,8 +1,21 @@
+import axios from "axios"
+import { baseURL } from "../utils/constant"
 
 export const UserCard = ({ user }) => {
 
 
-    const { firstName, lastName, photoUrl, about, gender, age, skills } = user
+    const { _id, firstName, lastName, photoUrl, about, gender, age, skills } = user
+
+    const handleSendRequest = async (status, id) => {
+        try {
+
+            const res = await axios.post(baseURL + "/request/send/" + status + "/" + id, {}, { withCredentials: true })
+            console.log(res)
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     return (
         <div className="card bg-base-100 w-96 shadow-xl">
@@ -20,8 +33,8 @@ export const UserCard = ({ user }) => {
                 }
                 <p>about : {about}</p>
                 <div className="card-actions flex  justify-centre">
-                    <button className="btn btn-secondary">Interested</button>
-                    <button className="btn btn-primary">Ignore</button>
+                    <button className="btn btn-secondary" onClick={() => handleSendRequest("interested", _id)}>Interested</button>
+                    <button className="btn btn-primary" onClick={() => handleSendRequest("ignored", _id)}>Ignore</button>
 
                 </div>
             </div>
