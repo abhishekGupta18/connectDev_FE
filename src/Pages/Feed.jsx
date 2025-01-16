@@ -33,7 +33,7 @@ export const Feed = () => {
     return <div className="flex flex-wrap justify-center space-x-4">
 
         {
-            feed && feed.map((card) => <UserCard key={card._id} user={card} />)
+            feed && feed.map((card) => <UserCard key={card._id} user={card} userFeed={userFeed} />)
         }
 
     </div>

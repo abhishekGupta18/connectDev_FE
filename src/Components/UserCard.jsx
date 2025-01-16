@@ -1,7 +1,7 @@
 import axios from "axios"
 import { baseURL } from "../utils/constant"
 
-export const UserCard = ({ user }) => {
+export const UserCard = ({ user, userFeed }) => {
 
 
     const { _id, firstName, lastName, photoUrl, about, gender, age, skills } = user
@@ -10,7 +10,7 @@ export const UserCard = ({ user }) => {
         try {
 
             const res = await axios.post(baseURL + "/request/send/" + status + "/" + id, {}, { withCredentials: true })
-            console.log(res)
+            userFeed()
 
         } catch (e) {
             console.log(e)

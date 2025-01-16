@@ -6,7 +6,7 @@ export const Requests = () => {
 
     const [requests, setRequests] = useState([])
 
-    console.log(requests)
+
 
     const getUserRequests = async () => {
 
@@ -23,12 +23,11 @@ export const Requests = () => {
 
     const handleRequest = async (status, requestId) => {
 
-        console.log(status)
-        console.log(requestId)
+
         try {
 
             const res = await axios.post(baseURL + "/request/review/" + status + "/" + requestId, {}, { withCredentials: true })
-            console.log(res)
+            getUserRequests()
 
         } catch (e) {
             console.log(e)
