@@ -8,6 +8,7 @@ import { Profile } from "./Pages/Profile";
 import { SignUp } from "./Pages/SignUp";
 import { Connections } from "./Pages/Connections";
 import { Requests } from "./Pages/Requests";
+import { Premium } from "./Components/Premium";
 
 //import { Connections } from "./Pages/Connections";
 
@@ -26,7 +27,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/connections" element={<Connections />} />
           <Route path="/requests" element={<Requests />} />
-
+          <Route path="/premium" element={<Premium />} />
         </Route>
 
       </Routes>
