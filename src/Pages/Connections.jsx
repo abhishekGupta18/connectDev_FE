@@ -1,6 +1,7 @@
 import axios from "axios"
 import { baseURL } from "../utils/constant"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 export const Connections = () => {
 
@@ -35,6 +36,7 @@ export const Connections = () => {
                     <img src={connections.photoUrl} alt="image of user" className="w-20 h-20 m-3 rounded-full " />
                     <p >{connections.firstName} {connections.lastName}</p>
                     <p>{connections.about}</p>
+                    <Link to={"/chat/" + connections._id}><button className="btn ">Chat</button></Link>
 
                 </div>)
             }
