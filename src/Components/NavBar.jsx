@@ -4,64 +4,146 @@ import { Link, useNavigate } from "react-router-dom"
 import { baseURL } from "../utils/constant"
 import { removeUser } from "../utils/userSlice"
 import { removeFeed } from "../utils/feedSlice"
+import { useState } from "react"
 
 const NavBar = () => {
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector((store) => store.user)
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
     const handleLogout = async () => {
         try {
-
             const res = await axios.post(baseURL + "/logout", { withCredentials: true })
             dispatch(removeUser())
             dispatch(removeFeed())
-
             navigate("/login")
-
-
         } catch (e) {
             console.log(e)
         }
     }
 
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen)
+    }
 
-    return <div className="navbar bg-base-100">
-        <div className="flex-1">
-            <Link to="/" className="btn btn-ghost text-xl">daisyUI</Link>
-        </div>
-        <div className="flex-none gap-2">
-            <div className="form-control">
-                <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+    return (
+        <div className="bg-base-100 backdrop-blur-md shadow-lg py-3 px-4 relative">
+            <div className="max-w-7xl mx-auto flex items-center justify-between">
+                {/* Logo */}
+                <div>
+                    <Link to="/" className="text-xl font-bold text-primary">connectdev</Link>
+                </div>
+
+                {/* Mobile Menu Button */}
+                {user && (
+                    <button
+                        className="md:hidden text-text-primary"
+                        onClick={toggleMobileMenu}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+                        </svg>
+                    </button>
+                )}
+
+                {/* Desktop Navigation Links */}
+                {user && (
+                    <div className="hidden md:flex space-x-6">
+                        <Link to="/profile" className="text-text-primary hover:text-primary transition-colors">
+                            Profile
+                        </Link>
+                        <Link to="/connections" className="text-text-primary hover:text-primary transition-colors">
+                            Connections
+                        </Link>
+                        <Link to="/requests" className="text-text-primary hover:text-primary transition-colors">
+                            Requests
+                        </Link>
+                        <Link to="/premium" className="text-text-primary hover:text-primary transition-colors">
+                            Premium
+                        </Link>
+                    </div>
+                )}
+
+                {/* User Avatar */}
+                {user && (
+                    <div className="relative group hidden md:block">
+                        <button className="flex items-center focus:outline-none">
+                            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
+                                <img
+                                    src={user.photoUrl}
+                                    alt="User"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        </button>
+
+                        {/* Dropdown Menu - Only Logout Option */}
+                        <div className="absolute right-0 mt-2 w-48 bg-base-200 backdrop-blur-md rounded-box shadow-lg py-1 z-10 invisible group-hover:visible transition-all">
+                            <button
+                                onClick={handleLogout}
+                                className="block w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-secondary"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
-            {user && <div className="dropdown dropdown-end">
-                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                    <div className="w-10 rounded-full">
-                        <img
-                            alt="Tailwind CSS Navbar component"
-                            src={user.photoUrl}
-                        />
+
+            {/* Mobile Menu */}
+            {user && isMobileMenuOpen && (
+                <div className="md:hidden mt-4 py-2 border-t border-primary">
+                    <Link
+                        to="/profile"
+                        className="block py-2 text-text-primary hover:text-primary"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        Profile
+                    </Link>
+                    <Link
+                        to="/connections"
+                        className="block py-2 text-text-primary hover:text-primary"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        Connections
+                    </Link>
+                    <Link
+                        to="/requests"
+                        className="block py-2 text-text-primary hover:text-primary"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        Requests
+                    </Link>
+                    <Link
+                        to="/premium"
+                        className="block py-2 text-text-primary hover:text-primary"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        Premium
+                    </Link>
+                    <div className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                            <div className="w-8 h-8 rounded-full overflow-hidden border border-primary mr-2">
+                                <img
+                                    src={user.photoUrl}
+                                    alt="User"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <span className="text-text-primary">Your Account</span>
+                        </div>
+                        <button
+                            onClick={handleLogout}
+                            className="text-sm text-primary hover:text-primary-focus"
+                        >
+                            Logout
+                        </button>
                     </div>
                 </div>
-                <ul
-                    tabIndex={0}
-                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                    <li>
-                        <Link to="/profile" className="justify-between">
-                            Profile
-                            <span className="badge">New</span>
-                        </Link>
-                    </li>
-                    <li><Link to="/connections">Connections</Link></li>
-                    <li><Link to="/requests">Requests</Link></li>
-                    <li><Link to="/premium">Premium</Link></li>
-                    <li><a onClick={handleLogout}>Logout</a></li>
-                </ul>
-            </div>}
+            )}
         </div>
-    </div >
-
+    )
 }
 
 export { NavBar }

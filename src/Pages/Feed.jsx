@@ -27,13 +27,17 @@ export const Feed = () => {
 
     useEffect(() => {
         userFeed()
-    }, [])
+    }, [feed])
+
+    if (feed && feed.length <= 0) {
+        return <h2>There is no new user in your feed</h2>
+    }
 
 
     return <div className="flex flex-wrap justify-center space-x-4">
 
         {
-            feed && feed.map((card) => <UserCard key={card._id} user={card} userFeed={userFeed} />)
+            feed && <UserCard user={feed[0]} />
         }
 
     </div>

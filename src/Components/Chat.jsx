@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { createSocketConnection } from "../utils/socket"
 import { useSelector } from "react-redux"
+import axios from "axios"
+import { baseURL } from "../utils/constant"
+import { text } from "@cloudinary/url-gen/qualifiers/source"
 
 export const Chat = () => {
 
@@ -11,6 +14,31 @@ export const Chat = () => {
     const user = useSelector((store) => store.user)
     const userId = user?._id
     const firstName = user?.firstName
+
+    const getChatHistory = async () => {
+        try {
+
+            const chats = await axios.get(baseURL + "/chat/" + targetUserId, { withCredentials: true })
+            console.log(chats.data.message)
+
+            const chatInfo = chats.data.message.map((msg) => {
+                return {
+                    firstName: msg.senderId.firstName,
+                    text: msg.text
+                }
+            })
+
+            setSendMessage(chatInfo)
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
+    useEffect(() => {
+        getChatHistory()
+    }, [])
 
     useEffect(() => {
 
