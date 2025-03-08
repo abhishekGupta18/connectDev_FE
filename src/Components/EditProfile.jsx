@@ -79,7 +79,7 @@ export const EditProfile = ({ user }) => {
                         <input
                             type="text"
                             placeholder="Type here"
-                            className="input input-bordered w-full bg-translucent-40 border-primary"
+                            className="input  w-full bg-translucent-40 border-primary"
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                         />
@@ -93,7 +93,7 @@ export const EditProfile = ({ user }) => {
                         <input
                             type="text"
                             placeholder="Type here"
-                            className="input input-bordered w-full bg-translucent-40 border-primary"
+                            className="input  w-full bg-translucent-40 border-primary"
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                         />
@@ -127,7 +127,7 @@ export const EditProfile = ({ user }) => {
                         <input
                             type="text"
                             placeholder="Type here"
-                            className="input input-bordered w-full bg-translucent-40 border-primary"
+                            className="input  w-full bg-translucent-40 border-primary"
                             value={age}
                             onChange={(e) => setAge(e.target.value)}
                         />
@@ -139,7 +139,7 @@ export const EditProfile = ({ user }) => {
                             <span className="label-text text-text-secondary font-medium">About</span>
                         </label>
                         <textarea
-                            className="textarea textarea-bordered h-24 w-full bg-translucent-40 border-primary"
+                            className="textarea  h-24 w-full bg-translucent-40 border-primary"
                             placeholder="Tell us about yourself"
                             value={about}
                             onChange={(e) => setAbout(e.target.value)}
@@ -222,7 +222,7 @@ export const EditProfile = ({ user }) => {
                                     id="skills"
                                     value={skills}
                                     onChange={(e) => setSkills(e.value)}
-                                    placeholder="Type a skill and press enter"
+
                                 />
                             </div>
                             <p className="text-text-secondary text-sm mt-2">Enter your skills one by one and press Enter after each</p>
