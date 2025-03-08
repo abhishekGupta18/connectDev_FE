@@ -28,8 +28,10 @@ export const Feed = () => {
 
     if (isLoading && (!feed || feed.length === 0)) {
         return (
-            <div className="flex justify-center items-center min-h-[70vh]">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            <div className="flex flex-col items-center justify-center min-h-[50vh] text-text-secondary">
+
+                <h3 className="text-2xl font-semibold bg-gradient-to-r from-gradient-start via-gradient-middle to-gradient-end bg-clip-text text-transparent">No new user on feed</h3>
+                <p className="mt-2 text-text-secondary opacity-80">You've seen all developers! Check back later for new profiles.</p>
             </div>
         )
     }

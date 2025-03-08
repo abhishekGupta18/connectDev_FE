@@ -11,18 +11,31 @@ export const Chat = () => {
     const chatContainer = useRef(null)
     const [sendMessage, setSendMessage] = useState([])
     const [newMsg, setNewMsg] = useState("")
+    const [targetUserDetails, setTargetUserDetails] = useState({})
     const user = useSelector((store) => store.user)
     const userId = user?._id
     const firstName = user?.firstName
     const timestamp = new Date().toISOString()
 
+
+    const getUserConnections = async () => {
+        try {
+
+            const res = await axios.get(baseURL + "/user/connections", { withCredentials: true })
+            const targetUser = res.data.data.find((connection) => connection._id == targetUserId)
+            setTargetUserDetails(targetUser)
+
+
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+
     const getChatHistory = async () => {
         try {
 
             const chats = await axios.get(baseURL + "/chat/" + targetUserId, { withCredentials: true })
-            console.log(chats.data.message)
-
-
 
             const chatInfo = chats.data.message.map((msg) => {
                 return {
@@ -42,6 +55,7 @@ export const Chat = () => {
 
     useEffect(() => {
         getChatHistory()
+        getUserConnections()
     }, [])
 
     useEffect(() => {
@@ -135,8 +149,15 @@ export const Chat = () => {
     return (
         <div className="flex flex-col h-screen p-4 bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end">
             <div className="backdrop-blur-lg bg-translucent-30 rounded-xl shadow-lg p-4 flex flex-col h-full">
+                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
+                    <img
+                        src={targetUserDetails.photoUrl}
+                        alt="User"
+                        className="w-full h-full object-cover"
+                    />
+                </div>
                 <h1 className="text-2xl font-bold text-text-primary mb-4 border-b border-primary pb-2">
-                    Chat
+                    Chats with {targetUserDetails.firstName + " " + targetUserDetails.lastName}
                 </h1>
 
                 <div ref={chatContainer} className="flex-1 overflow-y-auto pr-2 mb-4 space-y-3">
@@ -160,9 +181,9 @@ export const Chat = () => {
                                         : 'bg-translucent-40 text-text-primary'}`}>
                                         {msg.text}
                                     </div>
-                                    <div className="chat-footer opacity-50 text-xs">
+                                    {/* <div className="chat-footer opacity-50 text-xs">
                                         {isCurrentUser(msg.firstName) && "Seen"}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         ))

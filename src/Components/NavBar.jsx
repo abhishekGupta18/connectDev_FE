@@ -82,7 +82,7 @@ const NavBar = () => {
                         <div className="absolute right-0 mt-2 w-48 bg-base-200 backdrop-blur-md rounded-box shadow-lg py-1 z-10 invisible group-hover:visible transition-all">
                             <button
                                 onClick={handleLogout}
-                                className="block w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-secondary"
+                                className="block w-full text-left px-4 py-2 text-sm text-text-primary "
                             >
                                 Logout
                             </button>
