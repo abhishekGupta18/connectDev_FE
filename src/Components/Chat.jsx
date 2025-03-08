@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 import { createSocketConnection } from "../utils/socket"
 import { useSelector } from "react-redux"
@@ -8,6 +8,7 @@ import { baseURL } from "../utils/constant"
 export const Chat = () => {
 
     const { targetUserId } = useParams()
+    const chatContainer = useRef(null)
     const [sendMessage, setSendMessage] = useState([])
     const [newMsg, setNewMsg] = useState("")
     const user = useSelector((store) => store.user)
@@ -61,6 +62,18 @@ export const Chat = () => {
 
         // useState return statement run when react component unmount here when a ever the chat page is being closed socket will be dissconnect
     }, [userId, targetUserId])
+
+    useEffect(() => {
+        if (chatContainer.current) {
+            chatContainer.current.scrollTop = chatContainer.current.scrollHeight
+        }
+    }, [sendMessage])
+
+    useEffect(() => {
+        if (chatContainer.current) {
+            chatContainer.current.scrollTop = chatContainer.current.scrollHeight
+        }
+    }, [newMsg, sendMessage])
 
     const sendNewMessage = () => {
         const socket = createSocketConnection()
@@ -126,7 +139,7 @@ export const Chat = () => {
                     Chat
                 </h1>
 
-                <div className="flex-1 overflow-y-auto pr-2 mb-4 space-y-3">
+                <div ref={chatContainer} className="flex-1 overflow-y-auto pr-2 mb-4 space-y-3">
                     {sendMessage.length === 0 ? (
                         <div className="flex items-center justify-center h-full">
                             <p className="text-text-secondary opacity-70">No messages yet. Start the conversation!</p>
