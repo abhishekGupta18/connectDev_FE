@@ -10,6 +10,7 @@ import { Connections } from "./Pages/Connections";
 import { Requests } from "./Pages/Requests";
 import { Premium } from "./Components/Premium";
 import { Chat } from "./Components/Chat";
+import { AskAI } from "./Components/AskAI";
 
 //import { Connections } from "./Pages/Connections";
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/requests" element={<Requests />} />
           <Route path="/premium" element={<Premium />} />
           <Route path="/chat/:targetUserId" element={<Chat />} />
+          <Route path="/ask/ai" element={<AskAI />} />
         </Route>
 
       </Routes>

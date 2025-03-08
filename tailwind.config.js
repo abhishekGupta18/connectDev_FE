@@ -23,10 +23,21 @@ export default {
         primary: "rgba(255, 255, 255, 0.3)",
         badge: "rgba(255, 255, 255, 0.5)",
       },
+      animation: {
+        fadeIn: "fadeIn 0.3s ease forwards",
+        bounce: "bounce 1.5s infinite ease-in-out",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+      },
     },
   },
   plugins: [require("daisyui")],
   daisyui: {
+    // Your existing daisyui configuration...
     themes: [
       "light",
       "dark",

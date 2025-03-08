@@ -62,6 +62,9 @@ const NavBar = () => {
                         <Link to="/premium" className="text-text-primary hover:text-primary transition-colors">
                             Premium
                         </Link>
+                        <Link to="/ask/ai" className="text-text-primary hover:text-primary transition-colors">
+                            Ask AI
+                        </Link>
                     </div>
                 )}
 
@@ -121,6 +124,14 @@ const NavBar = () => {
                         onClick={() => setIsMobileMenuOpen(false)}
                     >
                         Premium
+                    </Link>
+
+                    <Link
+                        to="/ask/ai"
+                        className="block py-2 text-text-primary hover:text-primary"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        Ask AI
                     </Link>
                     <div className="flex items-center justify-between py-2">
                         <div className="flex items-center">
