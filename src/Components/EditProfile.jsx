@@ -8,7 +8,6 @@ import { Chips } from "primereact/chips"
 
 export const EditProfile = ({ user }) => {
     const dispatch = useDispatch()
-
     const [firstName, setFirstName] = useState(user.firstName)
     const [lastName, setLastName] = useState(user.lastName)
     const [photoUrl, setPhotoUrl] = useState(user.photoUrl)
@@ -16,6 +15,7 @@ export const EditProfile = ({ user }) => {
     const [about, setAbout] = useState(user.about)
     const [gender, setGender] = useState(user.gender)
     const [skills, setSkills] = useState(user.skills)
+    const [organization, setOrganization] = useState(user.organization)
 
     const [error, setError] = useState("")
     const [showToast, setShowToast] = useState(false)
@@ -51,7 +51,7 @@ export const EditProfile = ({ user }) => {
             setError("")
             const res = await axios.post(
                 baseURL + "/profile/edit",
-                { firstName, lastName, photoUrl, about, gender, age, skills },
+                { firstName, lastName, photoUrl, about, gender, age, skills, organization },
                 { withCredentials: true }
             )
             dispatch(addUser(res.data.data))
@@ -96,6 +96,19 @@ export const EditProfile = ({ user }) => {
                             className="input  w-full bg-translucent-40 border-primary"
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="form-control w-full">
+                        <label className="label">
+                            <span className="label-text text-text-secondary font-medium">Organization/School</span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Type here"
+                            className="input  w-full bg-translucent-40 border-primary"
+                            value={organization}
+                            onChange={(e) => setOrganization(e.target.value)}
                         />
                     </div>
 
@@ -248,7 +261,7 @@ export const EditProfile = ({ user }) => {
             <div className="w-full lg:w-1/2 backdrop-blur-lg bg-translucent-30 rounded-xl shadow-xl border border-primary overflow-hidden">
                 <div className="p-6">
                     <h2 className="text-2xl font-bold text-text-primary mb-6 text-center">Profile Preview</h2>
-                    <UserCard user={{ firstName, lastName, photoUrl, about, gender, age, skills }} />
+                    <UserCard user={{ firstName, lastName, photoUrl, about, gender, age, skills, organization }} />
                 </div>
             </div>
 

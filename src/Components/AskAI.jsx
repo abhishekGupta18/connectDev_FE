@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { baseURL } from '../utils/constant';
 
-export const AskAI = () => {
+const AskAI = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -56,7 +56,7 @@ export const AskAI = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto h-[500px] bg-translucent-30 backdrop-blur-md rounded-xl shadow-lg overflow-hidden flex flex-col">
+        <div className="max-w-2xl mx-auto mt-16 h-[500px] bg-translucent-30 backdrop-blur-md rounded-xl shadow-lg overflow-hidden flex flex-col">
             <div className="bg-primary text-primary-content p-4 text-center">
                 <h2 className="text-xl font-bold">AI Assistant</h2>
             </div>
@@ -122,3 +122,4 @@ export const AskAI = () => {
     );
 };
 
+export default AskAI

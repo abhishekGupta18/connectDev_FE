@@ -3,8 +3,9 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { baseURL } from "../utils/constant"
 import { useDispatch } from "react-redux"
+import { addUser } from "../utils/userSlice"
 
-export const SignUp = () => {
+const SignUp = () => {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
@@ -20,7 +21,9 @@ export const SignUp = () => {
     const handleSignup = async () => {
         try {
             const res = await axios.post(baseURL + "/signup", { firstName, lastName, email, password }, { withCredentials: true })
-            navigate("/login")
+            console.log(res.data.data)
+            dispatch(addUser(res.data.data))
+            navigate("/profile")
         } catch (e) {
             setError(e.response?.data || "Signup failed")
             console.error(e.response?.data)
@@ -135,3 +138,5 @@ export const SignUp = () => {
         </div>
     )
 }
+
+export default SignUp

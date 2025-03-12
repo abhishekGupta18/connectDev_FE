@@ -5,7 +5,7 @@ import { addUser } from "../utils/userSlice"
 import { useNavigate } from "react-router-dom"
 import { baseURL } from "../utils/constant"
 
-export const Login = () => {
+const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
@@ -108,3 +108,5 @@ export const Login = () => {
         </div>
     )
 }
+
+export default Login

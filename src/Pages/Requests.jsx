@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { baseURL } from "../utils/constant"
 
-export const Requests = () => {
+const Requests = () => {
     const [requests, setRequests] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
@@ -102,3 +102,5 @@ export const Requests = () => {
         </div>
     )
 }
+
+export default Requests

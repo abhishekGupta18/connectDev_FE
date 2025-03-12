@@ -1,8 +1,12 @@
 import axios from "axios";
 import { baseURL } from "../utils/constant";
+import { removeUserFromFeed } from "../utils/feedSlice";
+import { useDispatch } from "react-redux";
 
 export const UserCard = ({ user }) => {
-    const { _id, firstName, lastName, photoUrl, about, gender, age, skills } = user;
+    const { _id, firstName, lastName, photoUrl, about, gender, age, skills, organization } = user;
+
+    const dispatch = useDispatch()
 
     const handleSendRequest = async (status, id) => {
         try {
@@ -11,6 +15,7 @@ export const UserCard = ({ user }) => {
                 {},
                 { withCredentials: true }
             );
+            dispatch(removeUserFromFeed(id))
         } catch (e) {
             console.log(e);
         }
@@ -47,6 +52,12 @@ export const UserCard = ({ user }) => {
                         {age && (
                             <div className="text-xs backdrop-blur-sm bg-translucent-40 border border-badge text-text-secondary px-3 py-1 rounded-full">
                                 {age} years
+                            </div>
+                        )}
+
+                        {organization && (
+                            <div className="text-xs backdrop-blur-sm bg-translucent-40 border border-badge text-text-secondary px-3 py-1 rounded-full">
+                                {organization}
                             </div>
                         )}
                     </div>

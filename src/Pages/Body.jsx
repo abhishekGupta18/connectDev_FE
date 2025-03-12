@@ -6,7 +6,7 @@ import { baseURL } from "../utils/constant"
 import { useDispatch, useSelector } from "react-redux"
 import { addUser } from "../utils/userSlice"
 import { useEffect } from "react"
-export const Body = () => {
+const Body = () => {
 
     const userData = useSelector((store) => store.user)
 
@@ -46,3 +46,4 @@ export const Body = () => {
 
     </div>
 }
+export default Body

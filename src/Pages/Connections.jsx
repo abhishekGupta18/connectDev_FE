@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { addConnections } from "../utils/connectionSlice"
 
-export const Connections = () => {
+const Connections = () => {
 
     const [isLoading, setIsLoading] = useState(true)
     const dispatch = useDispatch()
@@ -94,3 +94,5 @@ export const Connections = () => {
         </div>
     )
 }
+
+export default Connections

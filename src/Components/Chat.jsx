@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import axios from "axios"
 import { baseURL } from "../utils/constant"
 
-export const Chat = () => {
+const Chat = () => {
 
     const { targetUserId } = useParams()
     const chatContainer = useRef(null)
@@ -147,18 +147,21 @@ export const Chat = () => {
     };
 
     return (
-        <div className="flex flex-col h-screen p-4 bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end">
+        <div className="flex flex-col h-screen max-w-4xl mx-auto p-4 bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end">
             <div className="backdrop-blur-lg bg-translucent-30 rounded-xl shadow-lg p-4 flex flex-col h-full">
-                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
-                    <img
-                        src={targetUserDetails.photoUrl}
-                        alt="User"
-                        className="w-full h-full object-cover"
-                    />
+                {/* Replace the current profile photo and header section with this */}
+                <div className="flex items-center mb-4 border-b border-primary pb-2">
+                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-primary mr-3">
+                        <img
+                            src={targetUserDetails.photoUrl}
+                            alt="User"
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                    <h1 className="text-2xl font-bold text-text-primary">
+                        Chats with {targetUserDetails.firstName + " " + targetUserDetails.lastName}
+                    </h1>
                 </div>
-                <h1 className="text-2xl font-bold text-text-primary mb-4 border-b border-primary pb-2">
-                    Chats with {targetUserDetails.firstName + " " + targetUserDetails.lastName}
-                </h1>
 
                 <div ref={chatContainer} className="flex-1 overflow-y-auto pr-2 mb-4 space-y-3">
                     {sendMessage.length === 0 ? (
@@ -211,3 +214,5 @@ export const Chat = () => {
         </div>
     )
 }
+
+export default Chat

@@ -1,7 +1,7 @@
 import axios from "axios"
 import { baseURL } from "../utils/constant"
 
-export const Premium = () => {
+const Premium = () => {
     const handlePayment = async (type) => {
         try {
             const order = await axios.post(baseURL + "/payment/create", {
@@ -142,3 +142,5 @@ export const Premium = () => {
         </div>
     )
 }
+
+export default Premium

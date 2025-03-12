@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { addFeed } from "../utils/feedSlice"
 import { UserCard } from "../Components/UserCard"
 
-export const Feed = () => {
+const Feed = () => {
     const dispatch = useDispatch()
     const feed = useSelector((store) => store.feed)
     const [isLoading, setIsLoading] = useState(true)
 
     const userFeed = async () => {
+        if (feed) return
         try {
             setIsLoading(true)
             const res = await axios.get(baseURL + "/feed", { withCredentials: true })
@@ -24,7 +25,7 @@ export const Feed = () => {
 
     useEffect(() => {
         userFeed()
-    }, [feed]) // Restored feed dependency to maintain original functionality
+    }, [])
 
     if (isLoading && (!feed || feed.length === 0)) {
         return (
@@ -66,3 +67,5 @@ export const Feed = () => {
         </div>
     )
 }
+
+export default Feed
