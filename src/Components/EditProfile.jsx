@@ -161,18 +161,17 @@ export const EditProfile = ({ user }) => {
                         <label className="label">
                             <span className="label-text text-text-secondary font-medium">Deployed Link of Project</span>
                         </label>
-                        <input
-                            type="text"
-                            placeholder="Type here"
-                            className="input  w-full bg-translucent-40 border-primary"
-                            value={projectUrl}
-                            onChange={(e) => setProjectUrl(e.target.value)}
-                        />
+                        <div className="flex items-center">
+                            <input
+                                type="text"
+                                placeholder="Type here"
+                                className="input w-full bg-translucent-40 border-primary"
+                                value={projectUrl}
+                                onChange={(e) => setProjectUrl(e.target.value)}
+                            />
+
+                        </div>
                     </div>
-
-
-
-
 
                     {/* Photo upload */}
                     <div className="form-control w-full">
@@ -272,32 +271,54 @@ export const EditProfile = ({ user }) => {
                         </label>
                         <div className="bg-translucent-40 rounded-lg border border-primary p-4">
                             {/* Custom styling to ensure Chips component is clearly visible */}
-                            <div className="p-chips-container">
-                                <style jsx>{`
-                                    /* Ensure the chips component has proper contrast */
-                                    :global(.p-chips) {
-                                        width: 100%;
+                            <div className="custom-chips-container">
+                                <style jsx global>{`
+                                    /* Higher specificity targeting for PrimeReact Chips */
+                                    .custom-chips-container .p-chips {
+                                        width: 100% !important;
                                         background: rgba(255, 255, 255, 0.8) !important;
                                         border-radius: 0.5rem !important;
                                         padding: 0.5rem !important;
                                     }
-                                    :global(.p-chips-token) {
-                                        background: #4f46e5 !important;
-                                        color: white !important;
+                                    
+                                    .custom-chips-container .p-chips .p-chips-multiple-container {
+                                        display: flex !important;
+                                        flex-wrap: wrap !important;
+                                        gap: 0.5rem !important;
+                                        padding: 0.5rem !important;
                                     }
-                                    :global(.p-chips-input-token) {
-                                        width: 100%;
+                                    
+                                    .custom-chips-container .p-chips .p-chips-token {
+                                        
+                                        color: black !important;
+                                        margin: 0.25rem !important;
+                                        padding: 0.5rem 0.75rem !important;
+                                        border-radius: 0.375rem !important;
+                                        border: 1px solid black !important;
+                                        font-size: 0.875rem !important;
+                                        line-height: 1 !important;
                                     }
-                                    :global(.p-chips-input-token input) {
+                                    
+                                    .custom-chips-container .p-chips .p-chips-input-token {
+                                        width: 100% !important;
+                                        padding: 0.25rem !important;
+                                    }
+                                    
+                                    .custom-chips-container .p-chips .p-chips-input-token input {
                                         width: 100% !important;
                                         padding: 0.5rem !important;
+                                    }
+                                    
+                                    /* Removed close button styling */
+                                    .custom-chips-container .p-chips .p-chips-token .p-chips-token-icon {
+                                        margin-left: 0.5rem !important;
                                     }
                                 `}</style>
                                 <Chips
                                     id="skills"
                                     value={skills}
                                     onChange={(e) => setSkills(e.value)}
-
+                                    className="custom-chips"
                                 />
                             </div>
                             <p className="text-text-secondary text-sm mt-2">Enter your skills one by one and press Enter after each</p>
@@ -335,8 +356,6 @@ export const EditProfile = ({ user }) => {
                     </div>
                 </div>
             )}
-
-
         </div>
     )
 }

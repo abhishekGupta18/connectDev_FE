@@ -23,6 +23,9 @@ const Body = () => {
 
         } catch (e) {
 
+            //navigate("/login")
+
+
             if (e.status === 401) {
                 navigate("/login")
             }

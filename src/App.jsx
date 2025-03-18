@@ -12,6 +12,14 @@ const Premium = lazy(() => import("./Components/Premium"))
 const Chat = lazy(() => import("./Components/Chat"))
 const AskAI = lazy(() => import("./Components/AskAI"))
 
+import { Navigate } from "react-router-dom";
+
+const PublicRoute = ({ element }) => {
+  const token = document.cookie.includes("token"); // Check if token exists
+
+  return token ? <Navigate to="/" /> : element;
+};
+
 
 
 function App() {
@@ -27,11 +35,13 @@ function App() {
       <Suspense fallback={LoadingFallback}>
         <Routes>
           <Route path="/" element={<Body />} >
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<PublicRoute element={<Login />} />} />
+
+            <Route path="/signup" element={<PublicRoute element={<SignUp />} />} />
 
             <Route path="/" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/signup" element={<SignUp />} />
+
             <Route path="/connections" element={<Connections />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/premium" element={<Premium />} />
