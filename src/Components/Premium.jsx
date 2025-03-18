@@ -1,9 +1,11 @@
 import axios from "axios"
 import { baseURL } from "../utils/constant"
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 const Premium = () => {
     const navigate = useNavigate()
+    const user = useSelector((store) => store.user)
     const handlePayment = async (type) => {
         try {
             const order = await axios.post(baseURL + "/payment/create", {
@@ -49,8 +51,10 @@ const Premium = () => {
             const response = await axios.post(baseURL + "/payment/verify", { orderId }, { withCredentials: true });
 
             if (response.data.success) {
-                alert("Payment successfull!!")
+                user.isPremium = true;
                 navigate("/")
+                alert("Payment successfull!!")
+
 
             } else {
                 alert("Payment verification failed please contact support");

@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { baseURL } from '../utils/constant';
+import { useSelector } from 'react-redux';
+import Premium from './Premium';
 
 const AskAI = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
+    const user = useSelector((store) => store.user)
+
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -54,6 +59,8 @@ const AskAI = () => {
             setIsLoading(false);
         }
     };
+
+    if (!user?.isPremium) return <Premium />
 
     return (
         <div className="max-w-2xl mx-auto mt-16 h-[500px] bg-translucent-30 backdrop-blur-md rounded-xl shadow-lg overflow-hidden flex flex-col">

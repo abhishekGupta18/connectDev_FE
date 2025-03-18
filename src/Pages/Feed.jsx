@@ -10,7 +10,6 @@ const Feed = () => {
     const feed = useSelector((store) => store.feed)
     const [isLoading, setIsLoading] = useState(true)
 
-    console.log(feed)
 
     const userFeed = async () => {
         if (feed) return

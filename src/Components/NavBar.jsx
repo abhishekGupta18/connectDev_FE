@@ -59,9 +59,9 @@ const NavBar = () => {
                         <Link to="/requests" className="text-text-primary hover:text-primary transition-colors">
                             Requests
                         </Link>
-                        <Link to="/premium" className="text-text-primary hover:text-primary transition-colors">
+                        {!user.isPremium && <Link to="/premium" className="text-text-primary hover:text-primary transition-colors">
                             Premium
-                        </Link>
+                        </Link>}
                         <Link to="/ask/ai" className="text-text-primary hover:text-primary transition-colors">
                             Ask AI
                         </Link>

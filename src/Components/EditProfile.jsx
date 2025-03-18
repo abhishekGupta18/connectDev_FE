@@ -2,11 +2,13 @@ import { useState } from "react"
 import { UserCard } from "./UserCard"
 import axios from "axios"
 import { baseURL } from "../utils/constant"
-import { useDispatch } from "react-redux"
+import { useDispatch, useStore } from "react-redux"
 import { addUser } from "../utils/userSlice"
 import { Chips } from "primereact/chips"
 
 export const EditProfile = ({ user }) => {
+
+    const { isPremium } = user
     const dispatch = useDispatch()
     const [firstName, setFirstName] = useState(user.firstName)
     const [lastName, setLastName] = useState(user.lastName)
@@ -16,6 +18,10 @@ export const EditProfile = ({ user }) => {
     const [gender, setGender] = useState(user.gender)
     const [skills, setSkills] = useState(user.skills)
     const [organization, setOrganization] = useState(user.organization)
+    const [githubUrl, setGithubUrl] = useState(user.githubUrl)
+    const [linkedlnUrl, setLinkedlnUrl] = useState(user.linkedlnUrl)
+    const [twitterUrl, setTwitterUrl] = useState(user.twitterUrl)
+    const [projectUrl, setProjectUrl] = useState(user.projectUrl)
 
     const [error, setError] = useState("")
     const [showToast, setShowToast] = useState(false)
@@ -51,7 +57,7 @@ export const EditProfile = ({ user }) => {
             setError("")
             const res = await axios.post(
                 baseURL + "/profile/edit",
-                { firstName, lastName, photoUrl, about, gender, age, skills, organization },
+                { firstName, lastName, photoUrl, about, gender, age, skills, organization, githubUrl, linkedlnUrl, twitterUrl, projectUrl },
                 { withCredentials: true }
             )
             dispatch(addUser(res.data.data))
@@ -111,6 +117,62 @@ export const EditProfile = ({ user }) => {
                             onChange={(e) => setOrganization(e.target.value)}
                         />
                     </div>
+
+                    <div className="form-control w-full">
+                        <label className="label">
+                            <span className="label-text text-text-secondary font-medium">Github Profile Url </span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Type here"
+                            className="input  w-full bg-translucent-40 border-primary"
+                            value={githubUrl}
+                            onChange={(e) => setGithubUrl(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="form-control w-full">
+                        <label className="label">
+                            <span className="label-text text-text-secondary font-medium">Linkedln Profile Url</span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Type here"
+                            className="input  w-full bg-translucent-40 border-primary"
+                            value={linkedlnUrl}
+                            onChange={(e) => setLinkedlnUrl(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="form-control w-full">
+                        <label className="label">
+                            <span className="label-text text-text-secondary font-medium">Twitter Profile Url</span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Type here"
+                            className="input  w-full bg-translucent-40 border-primary"
+                            value={twitterUrl}
+                            onChange={(e) => setTwitterUrl(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="form-control w-full">
+                        <label className="label">
+                            <span className="label-text text-text-secondary font-medium">Deployed Link of Project</span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Type here"
+                            className="input  w-full bg-translucent-40 border-primary"
+                            value={projectUrl}
+                            onChange={(e) => setProjectUrl(e.target.value)}
+                        />
+                    </div>
+
+
+
+
 
                     {/* Photo upload */}
                     <div className="form-control w-full">
@@ -261,18 +323,20 @@ export const EditProfile = ({ user }) => {
             <div className="w-full lg:w-1/2 backdrop-blur-lg bg-translucent-30 rounded-xl shadow-xl border border-primary overflow-hidden">
                 <div className="p-6">
                     <h2 className="text-2xl font-bold text-text-primary mb-6 text-center">Profile Preview</h2>
-                    <UserCard user={{ firstName, lastName, photoUrl, about, gender, age, skills, organization }} />
+                    <UserCard user={{ firstName, lastName, photoUrl, about, gender, age, skills, organization, twitterUrl, githubUrl, linkedlnUrl, projectUrl, isPremium }} />
                 </div>
             </div>
 
             {/* Toast notification */}
             {showToast && (
                 <div className="toast toast-top toast-center">
-                    <div className="alert alert-success">
+                    <div className="alert shadow-lg border border-gray-500/30 bg-gray-800/50 backdrop-blur-lg text-white rounded-lg">
                         <span>Profile updated successfully!!</span>
                     </div>
                 </div>
             )}
+
+
         </div>
     )
 }
