@@ -1,10 +1,12 @@
 import axios from "axios"
 import { baseURL } from "../utils/constant"
 import { useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { updateUserWithPremium } from "../utils/userSlice"
 
 const Premium = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const user = useSelector((store) => store.user)
     const handlePayment = async (type) => {
         try {
@@ -51,7 +53,7 @@ const Premium = () => {
             const response = await axios.post(baseURL + "/payment/verify", { orderId }, { withCredentials: true });
 
             if (response.data.success) {
-                user.isPremium = true;
+                dispatch(updateUserWithPremium())
                 navigate("/")
                 alert("Payment successfull!!")
 
@@ -66,6 +68,7 @@ const Premium = () => {
         }
 
     }
+
 
     return (
         <div className="container mx-auto px-4 py-12">

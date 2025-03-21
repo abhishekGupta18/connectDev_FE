@@ -11,10 +11,12 @@ const userSlice = createSlice({
     removeUser: (state, action) => {
       return null;
     },
-    // updateUserWithPremium:()
+    updateUserWithPremium: (state, action) => {
+      return { ...state, isPremium: true };
+    },
   },
 });
 
-export const { addUser, removeUser } = userSlice.actions;
+export const { addUser, removeUser, updateUserWithPremium } = userSlice.actions;
 
 export default userSlice.reducer;

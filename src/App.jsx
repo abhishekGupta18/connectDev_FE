@@ -11,6 +11,7 @@ const Requests = lazy(() => import("./Pages/Requests"))
 const Premium = lazy(() => import("./Components/Premium"))
 const Chat = lazy(() => import("./Components/Chat"))
 const AskAI = lazy(() => import("./Components/AskAI"))
+const Jobs = lazy(() => import("./Pages/Jobs"))
 
 import { Navigate } from "react-router-dom";
 
@@ -47,6 +48,7 @@ function App() {
             <Route path="/premium" element={<Premium />} />
             <Route path="/chat/:targetUserId" element={<Chat />} />
             <Route path="/ask/ai" element={<AskAI />} />
+            <Route path="/jobs" element={<Jobs />} />
           </Route>
 
         </Routes>

@@ -5,8 +5,11 @@ import { baseURL } from "../utils/constant"
 import { useDispatch, useStore } from "react-redux"
 import { addUser } from "../utils/userSlice"
 import { Chips } from "primereact/chips"
+import { useNavigate } from "react-router-dom"
 
 export const EditProfile = ({ user }) => {
+
+    const navigate = useNavigate()
 
     const { isPremium } = user
     const dispatch = useDispatch()
@@ -61,9 +64,11 @@ export const EditProfile = ({ user }) => {
                 { withCredentials: true }
             )
             dispatch(addUser(res.data.data))
+
             setShowToast(true)
             setTimeout(() => {
                 setShowToast(false)
+                navigate("/")
             }, 2000)
         } catch (e) {
             setError(e.response.data)
@@ -159,7 +164,7 @@ export const EditProfile = ({ user }) => {
 
                     <div className="form-control w-full">
                         <label className="label">
-                            <span className="label-text text-text-secondary font-medium">Deployed Link of Project</span>
+                            <span className="label-text text-text-secondary font-medium">Deployed Link of Project/Portfolio</span>
                         </label>
                         <div className="flex items-center">
                             <input

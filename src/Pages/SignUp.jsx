@@ -21,7 +21,7 @@ const SignUp = () => {
     const handleSignup = async () => {
         try {
             const res = await axios.post(baseURL + "/signup", { firstName, lastName, email, password }, { withCredentials: true })
-            console.log(res.data.data)
+
             dispatch(addUser(res.data.data))
             navigate("/profile")
         } catch (e) {

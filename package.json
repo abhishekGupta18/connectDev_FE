@@ -12,6 +12,7 @@
   "dependencies": {
     "@cloudinary/react": "^1.13.1",
     "@cloudinary/url-gen": "^1.21.0",
+    "@heroicons/react": "^2.2.0",
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",
     "dom": "^0.0.3",
