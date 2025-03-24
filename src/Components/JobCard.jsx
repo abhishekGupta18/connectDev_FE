@@ -18,8 +18,44 @@ const JobCard = ({ jobInfo }) => {
         setIsExpanded(!isExpanded);
     };
 
+    // Safely parse the date with a fallback
+    const parseDate = (dateString) => {
+        try {
+            return new Date(dateString);
+        } catch (error) {
+            console.error("Error parsing date:", error);
+            return new Date(); // Fallback to current date
+        }
+    };
+
+    const lastDateToApply = parseDate(deadline);
+
+    // Function to calculate days left
+    const getDaysLeft = () => {
+        try {
+            const deadlineDate = parseDate(deadline);
+            const today = new Date();
+            const diffTime = deadlineDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays <= 0 ? 'Expired' : `${diffDays} days left`;
+        } catch (error) {
+            console.error("Error calculating days left:", error);
+            return "Date error";
+        }
+    };
+
+    // Format the date safely
+    const formatDate = () => {
+        try {
+            return `${lastDateToApply.getDate()}/${lastDateToApply.getMonth() + 1}/${lastDateToApply.getFullYear()}`;
+        } catch (error) {
+            console.error("Error formatting date:", error);
+            return "Invalid date";
+        }
+    };
+
     return (
-        <div className="relative group animate-fadeIn">
+        <div className="relative group animate-fadeIn m-8 w-full max-w-lg mx-auto backdrop-blur-md bg-base-300 rounded-xl border border-primary shadow-lg transition-all duration-300 hover:bg-base-200 hover:shadow-xl">
             {/* Glassmorphic card with explicit classes */}
             <div className="rounded-xl overflow-hidden bg-translucent-20 backdrop-blur-md border border-primary shadow-lg p-6 transition-all duration-300 hover:bg-translucent-30 hover:shadow-xl">
 
@@ -33,9 +69,16 @@ const JobCard = ({ jobInfo }) => {
 
                 {/* Description with expand/collapse functionality */}
                 <div className="mb-6">
-                    <p className={`text-text-secondary transition-all duration-300 ${isExpanded ? '' : 'line-clamp-3'}`}>
-                        {description}
-                    </p>
+                    <div className="relative overflow-hidden"
+                        style={{ maxHeight: isExpanded ? 'none' : '4.5rem' }}>
+                        <p className="text-text-secondary">
+                            {description}
+                        </p>
+                        {!isExpanded && (
+                            <div className="absolute bottom-0 left-0 w-full h-8 
+                 bg-gradient-to-t from-translucent-20 to-transparent"></div>
+                        )}
+                    </div>
                     <button
                         onClick={toggleExpand}
                         className="mt-2 flex items-center text-button-primary-text hover:text-primary-focus text-sm font-medium transition-colors"
@@ -51,7 +94,6 @@ const JobCard = ({ jobInfo }) => {
                         )}
                     </button>
                 </div>
-
                 {/* Details section using flex instead of grid */}
                 <div className="mb-6">
                     <div className="flex flex-wrap -mx-2">
@@ -83,7 +125,7 @@ const JobCard = ({ jobInfo }) => {
                         <div className="px-2 w-full md:w-1/2 mb-3">
                             <div className="flex items-center gap-2">
                                 <CalendarIcon className="h-5 w-5 text-primary" />
-                                <span className="text-text-secondary">Deadline: {deadline}</span>
+                                <span className="text-text-secondary">Deadline: {formatDate()}</span>
                             </div>
                         </div>
                     </div>
@@ -93,24 +135,18 @@ const JobCard = ({ jobInfo }) => {
                 <div className="flex justify-between items-center">
                     <a
                         href={applyLink}
-                        className="px-6 py-2 rounded-full bg-primary text-white font-medium transition-all hover:bg-primary-focus hover:shadow-md"
+                        target='_blank'
+                        className="px-6 py-2 rounded-full bg-primary text-white font-mediumM transition-all hover:bg-primary-focus hover:shadow-md"
                     >
                         Apply Now
                     </a>
 
                     <div className="flex items-center gap-2 text-sm">
                         <ClockIcon className="h-4 w-4 text-accent" />
-                        <span className="text-text-secondary">
-                            {new Date(deadline) < new Date()
-                                ? 'Expired'
-                                : `${Math.ceil((new Date(deadline) - new Date()) / (1000 * 60 * 60 * 24))} days left`}
-                        </span>
+                        <span className="text-text-secondary">{getDaysLeft()}</span>
                     </div>
                 </div>
             </div>
-
-            {/* Decorative gradient pill on hover */}
-            <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] h-[95%] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-gradient-start via-gradient-middle to-gradient-end blur-xl"></div>
         </div>
     );
 };
