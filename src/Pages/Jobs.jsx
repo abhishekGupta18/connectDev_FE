@@ -5,11 +5,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { showJobs } from "../utils/jobSlice"
 import JobCard from "../Components/JobCard"
 import { Link } from "react-router-dom"
+import Premium from "../Components/Premium"
 
 const Jobs = () => {
     const dispatch = useDispatch()
     const jobs = useSelector((store) => store.jobs)
     const [showTooltip, setShowTooltip] = useState(false);
+
+    const user = useSelector((store) => store.user)
 
     const fetchAllJobs = async () => {
         try {
@@ -47,6 +50,9 @@ const Jobs = () => {
             clearTimeout(initialTimeout);
         };
     }, []); // Empty dependency array to run once on mount
+
+
+    if (!user?.isPremium) return <Premium />
 
     return (
         <div className="relative">

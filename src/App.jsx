@@ -14,6 +14,7 @@ const AskAI = lazy(() => import("./Components/AskAI"))
 const Jobs = lazy(() => import("./Pages/Jobs"))
 const AddJob = lazy(() => import("./Components/AddJob"))
 
+
 import { Navigate } from "react-router-dom";
 
 const PublicRoute = ({ element }) => {
@@ -51,6 +52,7 @@ function App() {
             <Route path="/ask/ai" element={<AskAI />} />
             <Route path="/jobs" element={<Jobs />} />
             <Route path="/jobs/addJob" element={<AddJob />} />
+
           </Route>
 
         </Routes>

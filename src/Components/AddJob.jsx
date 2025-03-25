@@ -15,12 +15,21 @@ const AddJob = () => {
     const [location, setLocation] = useState("")
     const [deadline, setDeadline] = useState("")
 
+    const [showToast, setShowToast] = useState(false)
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
 
             const res = await axios.post(baseURL + "/jobs/post", { company, role, description, salary, applyLink, experience, location, deadline }, { withCredentials: true })
-            resetForm()
+            setShowToast(true)
+            setTimeout(() => {
+                setShowToast(false)
+                resetForm()
+
+            }, 2000)
+
+
         } catch (e) {
             console.log(e)
         }
@@ -47,7 +56,7 @@ const AddJob = () => {
         <div className="w-full max-w-4xl mx-auto p-6 bg-translucent-30 rounded-xl backdrop-blur-md border border-primary my-4">
             <h2 className="text-2xl font-bold mb-6 text-text-primary">Add New Job Posting</h2>
 
-            <form className="space-y-4" onSubmit={handleSubmit} ref={formRef}>
+            <form className="space-y-4 p-8 backdrop-blur-md bg-base-300 rounded-xl border border-primary shadow-lg transition-all duration-300 hover:bg-base-200 hover:shadow-xl " onSubmit={handleSubmit} ref={formRef}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Company Name */}
                     <div className="form-control w-full">
@@ -190,6 +199,17 @@ const AddJob = () => {
                     </button>
                 </div>
             </form>
+
+            {showToast && (
+                <div className="toast toast-top toast-center">
+                    <div className="alert shadow-lg border border-gray-500/30 bg-gray-800/50 backdrop-blur-lg text-white rounded-lg">
+                        <span>Job added successfully!!</span>
+                    </div>
+                </div>
+            )}
+
+
+
         </div>
     );
 };
