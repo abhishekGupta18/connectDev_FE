@@ -44,6 +44,12 @@ const JobCard = ({ jobInfo }) => {
         }
     };
 
+    // Check if job is expired
+    const isExpired = () => {
+        const today = new Date();
+        return today > lastDateToApply;
+    };
+
     // Format the date safely
     const formatDate = () => {
         try {
@@ -54,11 +60,40 @@ const JobCard = ({ jobInfo }) => {
         }
     };
 
-    return (
-        <div className="relative group animate-fadeIn m-8 w-full max-w-lg mx-auto backdrop-blur-md bg-base-300 rounded-xl border border-primary shadow-lg transition-all duration-300 hover:bg-base-200 hover:shadow-xl">
-            {/* Glassmorphic card with explicit classes */}
-            <div className="rounded-xl overflow-hidden bg-translucent-20 backdrop-blur-md border border-primary shadow-lg p-6 transition-all duration-300 hover:bg-translucent-30 hover:shadow-xl">
+    // Prevent default click and stop propagation for expired jobs
+    const handleClick = (e) => {
+        if (isExpired()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    };
 
+    return (
+        <div
+            onClick={handleClick}
+            className={`
+                relative group animate-fadeIn m-8 w-full max-w-lg mx-auto 
+                backdrop-blur-md rounded-xl border border-primary shadow-lg 
+                transition-all duration-300 
+                ${isExpired() ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-200 hover:shadow-xl'}
+            `}
+        >
+            {/* Overlay for expired jobs */}
+            {isExpired() && (
+                <div className="absolute inset-0 z-10 bg-black/30 flex items-center justify-center">
+                    <span className="text-white text-lg font-bold">Job Expired</span>
+                </div>
+            )}
+
+            {/* Glassmorphic card with explicit classes */}
+            <div
+                className={`
+                    rounded-xl overflow-hidden bg-translucent-20 backdrop-blur-md 
+                    border border-primary shadow-lg p-6 transition-all duration-300 
+                    ${isExpired() ? 'pointer-events-none' : 'hover:bg-translucent-30 hover:shadow-xl'}
+                `}
+            >
+                {/* Rest of the existing component remains the same */}
                 {/* Company and role section */}
                 <div className="mb-4">
                     <h3 className="text-2xl font-bold text-text-primary mb-1">{role}</h3>
@@ -81,7 +116,13 @@ const JobCard = ({ jobInfo }) => {
                     </div>
                     <button
                         onClick={toggleExpand}
-                        className="mt-2 flex items-center text-button-primary-text hover:text-primary-focus text-sm font-medium transition-colors"
+                        disabled={isExpired()}
+                        className={`
+                            mt-2 flex items-center text-button-primary-text 
+                            hover:text-primary-focus text-sm font-medium 
+                            transition-colors
+                            ${isExpired() ? 'opacity-50 cursor-not-allowed' : ''}
+                        `}
                     >
                         {isExpanded ? (
                             <>
@@ -94,7 +135,8 @@ const JobCard = ({ jobInfo }) => {
                         )}
                     </button>
                 </div>
-                {/* Details section using flex instead of grid */}
+
+                {/* Details section */}
                 <div className="mb-6">
                     <div className="flex flex-wrap -mx-2">
                         {/* Salary */}
@@ -136,14 +178,24 @@ const JobCard = ({ jobInfo }) => {
                     <a
                         href={applyLink}
                         target='_blank'
-                        className="px-6 py-2 rounded-full bg-primary text-white font-mediumM transition-all hover:bg-primary-focus hover:shadow-md"
+                        onClick={handleClick}
+                        className={`
+                            px-6 py-2 rounded-full 
+                            ${isExpired()
+                                ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                                : 'bg-primary text-white hover:bg-primary-focus hover:shadow-md'
+                            }
+                        `}
+                        disabled={isExpired()}
                     >
-                        Apply Now
+                        {isExpired() ? 'Expired' : 'Apply Now'}
                     </a>
 
                     <div className="flex items-center gap-2 text-sm">
                         <ClockIcon className="h-4 w-4 text-accent" />
-                        <span className="text-text-secondary">{getDaysLeft()}</span>
+                        <span className={`text-text-secondary ${isExpired() ? 'text-red-500' : ''}`}>
+                            {getDaysLeft()}
+                        </span>
                     </div>
                 </div>
             </div>
