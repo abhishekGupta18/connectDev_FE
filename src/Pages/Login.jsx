@@ -10,6 +10,7 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
+    const [isloading, setIsLoading] = useState(false)
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -18,13 +19,40 @@ const Login = () => {
 
     const handleClick = async () => {
         try {
-            const res = await axios.post(baseURL + "/login", { email, password }, { withCredentials: true })
-            dispatch(addUser(res.data))
-            navigate("/")
+            // Add loading state if you have one
+            setIsLoading(true);
+
+            const res = await axios.post(
+                baseURL + "/login",
+                { email, password },
+                { withCredentials: true }
+            );
+
+            // Log the full response to see what you're getting
+            console.log("Full response:", res);
+
+            // Check if response data exists and contains user info
+            if (res.data) {
+                // Store token in localStorage as fallback
+                if (res.data.token) {
+                    localStorage.setItem('authToken', res.data.token);
+                }
+
+                // Dispatch action with the user data
+                dispatch(addUser(res.data.data));
+
+                // Small delay to ensure Redux state is updated
+                setTimeout(() => {
+                    navigate("/");
+                }, 100);
+            } else {
+                setError("Login successful but no user data received");
+            }
         } catch (e) {
-            console.log(e)
-            setError(e.response?.data || "Login failed")
-            console.error(e.response?.data)
+            console.error("Login error:", e);
+            setError(e.response?.data || "Login failed");
+        } finally {
+            setIsLoading(false);
         }
     }
 

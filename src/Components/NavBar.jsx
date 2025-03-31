@@ -12,6 +12,8 @@ const NavBar = () => {
     const user = useSelector((store) => store.user)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
+
+
     const handleLogout = async () => {
         try {
             const res = await axios.post(baseURL + "/logout", {}, { withCredentials: true })
