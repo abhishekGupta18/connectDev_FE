@@ -28,9 +28,6 @@ const Login = () => {
                 { withCredentials: true }
             );
 
-            // Log the full response to see what you're getting
-            console.log("Full response:", res);
-
             // Check if response data exists and contains user info
             if (res.data) {
                 // Store token in localStorage as fallback
