@@ -9,7 +9,11 @@ const Requests = () => {
     const getUserRequests = async () => {
         try {
             setIsLoading(true)
-            const res = await axios.get(baseURL + "/user/requests/recevied", { withCredentials: true })
+            const minLoadingTime = new Promise(resolve => setTimeout(resolve, 500));
+            const fetchRequest = await axios.get(baseURL + "/user/requests/recevied", { withCredentials: true })
+
+            const [res] = await Promise.all([fetchRequest, minLoadingTime]);
+
             setRequests(res.data.data)
         } catch (e) {
             console.error(e)

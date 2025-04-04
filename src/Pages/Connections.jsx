@@ -14,15 +14,20 @@ const Connections = () => {
 
     const getUserConnections = async () => {
         try {
-            setIsLoading(true)
-            const res = await axios.get(baseURL + "/user/connections", { withCredentials: true })
-            dispatch(addConnections(res.data.data))
+            setIsLoading(true);
+            // Ensure the loader is visible for at least 500ms
+            const minLoadingTime = new Promise(resolve => setTimeout(resolve, 500));
 
+            const fetchData = axios.get(baseURL + "/user/connections", { withCredentials: true });
 
+            // Wait for both the API call and minimum loading time
+            const [res] = await Promise.all([fetchData, minLoadingTime]);
+
+            dispatch(addConnections(res.data.data));
         } catch (e) {
-            console.error(e)
+            console.error(e);
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
     }
 
