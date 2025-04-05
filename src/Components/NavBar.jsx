@@ -154,7 +154,7 @@ const NavBar = () => {
                         className="block py-2 text-text-primary hover:text-primary"
                         onClick={() => setIsMobileMenuOpen(false)}
                     >
-                        Jobs
+                        Events
                     </Link>
 
 
