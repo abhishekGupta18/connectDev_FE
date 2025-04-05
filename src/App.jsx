@@ -13,6 +13,8 @@ const Chat = lazy(() => import("./Components/Chat"))
 const AskAI = lazy(() => import("./Components/AskAI"))
 const Jobs = lazy(() => import("./Pages/Jobs"))
 const AddJob = lazy(() => import("./Components/AddJob"))
+const Events = lazy(() => import("./Pages/Events"))
+const AddEvent = lazy(() => import("./Components/AddEvent"))
 
 
 import { Navigate } from "react-router-dom";
@@ -52,6 +54,8 @@ function App() {
             <Route path="/ask/ai" element={<AskAI />} />
             <Route path="/jobs" element={<Jobs />} />
             <Route path="/jobs/addJob" element={<AddJob />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/events/addEvent" element={<AddEvent />} />
 
           </Route>
 

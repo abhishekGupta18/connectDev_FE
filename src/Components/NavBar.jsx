@@ -70,6 +70,9 @@ const NavBar = () => {
                         <Link to="/jobs" className="text-text-primary hover:text-primary transition-colors">
                             Jobs
                         </Link>
+                        <Link to="/events" className="text-text-primary hover:text-primary transition-colors">
+                            Events
+                        </Link>
                     </div>
                 )}
 
