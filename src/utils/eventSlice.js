@@ -4,11 +4,11 @@ const eventSlice = createSlice({
   name: "event",
   initialState: null,
   reducers: {
-    showEvents: (state, action) => action.payload,
+    addEvents: (state, action) => action.payload,
     removeEvents: (state, action) => null,
   },
 });
 
-export const { showEvents, removeEvents } = eventSlice.actions;
+export const { addEvents, removeEvents } = eventSlice.actions;
 
 export default eventSlice.reducer;
