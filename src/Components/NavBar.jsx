@@ -141,6 +141,24 @@ const NavBar = () => {
                     >
                         Ask AI
                     </Link>
+
+                    <Link
+                        to="/jobs"
+                        className="block py-2 text-text-primary hover:text-primary"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        Jobs
+                    </Link>
+                    <Link
+                        to="/events"
+                        className="block py-2 text-text-primary hover:text-primary"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        Jobs
+                    </Link>
+
+
+
                     <div className="flex items-center justify-between py-2">
                         <div className="flex items-center">
                             <div className="w-8 h-8 rounded-full overflow-hidden border border-primary mr-2">
