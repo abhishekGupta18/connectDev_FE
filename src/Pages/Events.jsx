@@ -63,7 +63,7 @@ const Events = () => {
         <div className="fixed right-10 bottom-10 z-10">
             <Link to="/events/addEvent">
                 <button type="button" className="bg-primary text-white rounded-full p-2 border-2 border-white shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
                         <path d="M17 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4V1h2v2h6V1h2v2zm-2 2H9v2H7V5H4v4h16V5h-3v2h-2V5zm5 6H4v8h16v-8z" />
                         <circle cx="7" cy="15" r="1" />
                         <circle cx="12" cy="15" r="1" />
