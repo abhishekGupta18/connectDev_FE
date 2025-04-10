@@ -27,16 +27,7 @@ const Feed = () => {
         userFeed();
     }, []);
 
-    if (isLoading && (!feed || feed.length === 0)) {
-        return (
-            <div className="flex flex-col items-center justify-center min-h-[50vh] text-text-secondary">
-                <div className="animate-pulse">
-                    <div className="h-12 w-64 bg-gray-300 rounded-lg mb-4"></div>
-                    <div className="h-6 w-48 bg-gray-200 rounded-lg"></div>
-                </div>
-            </div>
-        );
-    }
+
 
     if (!feed || feed.length <= 0) {
         return (
