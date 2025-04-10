@@ -90,7 +90,7 @@ const NavBar = () => {
                         </button>
 
                         {/* Dropdown Menu - Only Logout Option */}
-                        <div className="absolute right-0 mt-2 w-48 bg-base-200 backdrop-blur-md rounded-box shadow-lg py-1 z-10 invisible group-hover:visible transition-all">
+                        <div className="absolute right-0 mt-2 w-48 bg-base-200 backdrop-blur-md rounded-box shadow-lg py-1 z- invisible group-hover:visible transition-all">
                             <button
                                 onClick={handleLogout}
                                 className="block w-full text-left px-4 py-2 text-sm text-text-primary "
@@ -126,13 +126,13 @@ const NavBar = () => {
                     >
                         Requests
                     </Link>
-                    <Link
+                    {!user.isPremiumb && <Link
                         to="/premium"
                         className="block py-2 text-text-primary hover:text-primary"
                         onClick={() => setIsMobileMenuOpen(false)}
                     >
                         Premium
-                    </Link>
+                    </Link>}
 
                     <Link
                         to="/ask/ai"
