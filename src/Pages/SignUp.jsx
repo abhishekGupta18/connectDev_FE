@@ -5,6 +5,10 @@ import { baseURL } from "../utils/constant"
 import { useDispatch } from "react-redux"
 import { addUser } from "../utils/userSlice"
 
+import { InputOtp } from 'primereact/inputotp';
+import { Button } from 'primereact/button';
+
+
 const SignUp = () => {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -12,11 +16,19 @@ const SignUp = () => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
+    const [otpBox, setOtpBox] = useState(false)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleNavigateToLogin = () => navigate("/login")
+
+
+    const [otp, setOtp] = useState();
+
+    const customInput = ({ events, props }) => {
+        return <input {...events} {...props} type="text" className="custom-otp-input" />
+    };
 
     const handleSignup = async () => {
         try {
@@ -27,6 +39,33 @@ const SignUp = () => {
         } catch (e) {
             setError(e.response?.data || "Signup failed")
             console.error(e.response?.data)
+        }
+    }
+
+    const handleSendOtp = async () => {
+        try {
+            setError("")
+            const res = await axios.post(baseURL + "/send-otp", { firstName, lastName, email, password }, { withCredentials: true })
+            setOtpBox(true)
+
+
+        } catch (e) {
+            console.log(e.response.data.error)
+            setError(e.response.data.error)
+        }
+    }
+
+    const handleVerifyOtp = async () => {
+        try {
+            setError("")
+            const res = await axios.post(baseURL + "/verify-otp", { email, otp })
+            if (res.status === 200) {
+                handleSignup()
+            }
+
+        } catch (e) {
+            console.log(e)
+            setError(e.response.data.error)
         }
     }
 
@@ -115,12 +154,112 @@ const SignUp = () => {
 
                     {error && <p className="text-error text-sm mt-1 mb-4">{error}</p>}
 
-                    <button
+                    {!otpBox && <button
                         className="btn btn-primary text-primary-content w-full rounded-btn mt-2"
-                        onClick={handleSignup}
+                        onClick={handleSendOtp}
                     >
                         Sign Up
-                    </button>
+                    </button>}
+
+                    {otpBox &&
+                        <div className="card otp-container">
+                            <style jsx>{`
+                                @keyframes smoothFadeIn {
+                                    from { opacity: 0; transform: translateY(5px); }
+                                    to { opacity: 1; transform: translateY(0); }
+                                }
+                                
+                                .otp-container {
+                                    animation: smoothFadeIn 0.5s ease-out;
+                                }
+                                
+                                .custom-otp-input {
+                                    width: 32px;
+                                    height: 38px;
+                                    font-size: 16px;
+                                    text-align: center;
+                                    margin: 0 3px;
+                                    background: rgba(255, 255, 255, 0.2);
+                                    border: 1px solid rgba(255, 255, 255, 0.3);
+                                    border-radius: 0.4rem;
+                                    color: #111827;
+                                    transition: all 0.3s ease;
+                                }
+                                
+                                .custom-otp-input:focus {
+                                    outline: none;
+                                    box-shadow: 0 0 0 2px #4f46e5;
+                                    background: rgba(255, 255, 255, 0.3);
+                                }
+                                
+                                @media (max-width: 640px) {
+                                    .custom-otp-input {
+                                        width: 28px;
+                                        height: 34px;
+                                        font-size: 14px;
+                                        margin: 0 2px;
+                                    }
+                                }
+                                
+                                .otp-button {
+                                    transition: all 0.3s ease;
+                                    font-size: 0.875rem;
+                                    padding: 0.5rem 1rem;
+                                    border-radius: 1.5rem;
+                                }
+                                
+                                .resend-button {
+                                    color: #4f46e5;
+                                    background: transparent;
+                                    border: none;
+                                    cursor: pointer;
+                                    font-size: 0.875rem;
+                                    padding: 0;
+                                    transition: all 0.3s ease;
+                                }
+                                
+                                .resend-button:hover {
+                                    text-decoration: underline;
+                                }
+                                
+                                .submit-button {
+                                    background-color: #4f46e5;
+                                    color: white;
+                                    border: none;
+                                    border-radius: 1.5rem;
+                                    padding: 0.5rem 1.25rem;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                }
+                                
+                                .submit-button:hover {
+                                    background-color: #4338ca;
+                                }
+                            `}</style>
+                            <div className="flex flex-col items-center w-full">
+                                <h3 className="font-bold text-lg text-text-primary mb-1">Authenticate Your Account</h3>
+                                <p className="text-text-secondary text-sm text-center mb-4">Please enter the code sent to your phone.</p>
+
+                                <div className="flex justify-center my-2">
+                                    <InputOtp
+                                        value={otp}
+                                        onChange={(e) => setOtp(e.value)}
+                                        length={6}
+                                        inputTemplate={customInput}
+                                    />
+                                </div>
+
+                                <div className="flex justify-between w-full mt-3">
+                                    <button className="resend-button" onClick={handleSendOtp}>
+                                        Resend Code
+                                    </button>
+                                    <button className="submit-button" onClick={handleVerifyOtp}>
+                                        Submit Otp
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
 
                     <div className="divider text-text-secondary text-sm">OR</div>
 
