@@ -238,7 +238,8 @@ const SignUp = () => {
                             `}</style>
                             <div className="flex flex-col items-center w-full">
                                 <h3 className="font-bold text-lg text-text-primary mb-1">Authenticate Your Account</h3>
-                                <p className="text-text-secondary text-sm text-center mb-4">Please enter the code sent to your phone.</p>
+                                <p className="text-text-secondary text-sm text-center mb-4">Please enter the code sent to your phone.Otp will expire after 5 min</p>
+
 
                                 <div className="flex justify-center my-2">
                                     <InputOtp
@@ -248,6 +249,10 @@ const SignUp = () => {
                                         inputTemplate={customInput}
                                     />
                                 </div>
+
+
+
+
 
                                 <div className="flex justify-between w-full mt-3">
                                     <button className="resend-button" onClick={handleSendOtp}>
