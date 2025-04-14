@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux"
 import { addUser } from "../utils/userSlice"
 
 import { InputOtp } from 'primereact/inputotp';
-import { Button } from 'primereact/button';
 
 
 const SignUp = () => {

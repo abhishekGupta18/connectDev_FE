@@ -1,12 +1,17 @@
 import axios from "axios";
 import { baseURL } from "../utils/constant";
 import { removeUserFromFeed } from "../utils/feedSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 export const UserCard = ({ user }) => {
     const { _id, firstName, lastName, photoUrl, about, gender, age, skills, organization, isPremium, twitterUrl, githubUrl, linkedlnUrl, projectUrl } = user;
 
+    const [showToast, setShowToast] = useState(false)
+    const [toastMessage, setToastMessage] = useState("")
+
     const dispatch = useDispatch();
+    const loggedInuser = useSelector((store) => store.user)
 
     const handleSendRequest = async (status, id) => {
         try {
@@ -15,6 +20,21 @@ export const UserCard = ({ user }) => {
                 {},
                 { withCredentials: true }
             );
+
+            let message = ""
+            if (status === "interested") {
+                message = `${loggedInuser.firstName} is interested in ${firstName} profile`
+            } else if (status === "ignored") {
+                message = `${loggedInuser.firstName} ignored ${firstName} profile`
+            }
+
+            setToastMessage(message)
+
+            setShowToast(true)
+            setTimeout(() => {
+                setShowToast(false)
+                navigate("/")
+            }, 1000)
             dispatch(removeUserFromFeed(id));
         } catch (e) {
             console.log(e);
@@ -193,6 +213,14 @@ export const UserCard = ({ user }) => {
                     </div>
                 </div>
             </div>
+            {/* Toast notification */}
+            {showToast && (
+                <div className="toast toast-top toast-center z-100">
+                    <div className="alert shadow-lg border border-gray-500/30 bg-gray-800/50 backdrop-blur-lg text-white rounded-lg">
+                        <span>{toastMessage}</span>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
