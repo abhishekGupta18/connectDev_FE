@@ -37,7 +37,6 @@ export default {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    // Your existing daisyui configuration...
     themes: [
       "light",
       "dark",
@@ -84,5 +83,6 @@ export default {
         },
       },
     ],
+    defaultTheme: "light", // 👈 force light theme always
   },
 };
