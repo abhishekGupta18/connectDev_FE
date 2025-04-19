@@ -37,6 +37,7 @@ const SignUp = () => {
             navigate("/profile")
         } catch (e) {
             setError(e.response?.data || "Signup failed")
+            setOtpBox(false)
             console.error(e.response?.data)
         }
     }
@@ -46,6 +47,12 @@ const SignUp = () => {
             setError("")
             const res = await axios.post(baseURL + "/send-otp", { firstName, lastName, email, password }, { withCredentials: true })
             setOtpBox(true)
+            setTimeout(() => {
+
+                setOtpBox(false)
+
+            }, 240000);
+
 
 
         } catch (e) {

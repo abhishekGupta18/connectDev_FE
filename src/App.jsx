@@ -57,6 +57,7 @@ function App() {
             <Route path="/events" element={<Events />} />
             <Route path="/events/addEvent" element={<AddEvent />} />
 
+
           </Route>
 
         </Routes>
