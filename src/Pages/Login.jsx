@@ -40,7 +40,7 @@ const Login = () => {
 
                 // Small delay to ensure Redux state is updated
                 setTimeout(() => {
-                    navigate("/");
+                    navigate("/feed");
                 }, 100);
             } else {
                 setError("Login successful but no user data received");

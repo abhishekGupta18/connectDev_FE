@@ -12,30 +12,52 @@ const Body = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation()
+
+    // Routes configuration
+    const publicOnlyRoutes = ["/", "/login", "/signup"]
     const hideFooterFromRoutes = ["/login", "/signup"]
+    const hideNavbarFromRoutes = ["/"]
 
     const fetchUser = async () => {
         try {
             const res = await axios.get(baseURL + "/profile/view", { withCredentials: true })
             dispatch(addUser(res.data))
+
+
+            if (publicOnlyRoutes.includes(location.pathname)) {
+                navigate("/feed")
+            }
         } catch (e) {
-            //navigate("/login")
-            if (e.status === 401) {
-                navigate("/login")
+            if (e.response && e.response.status === 401) {
+                if (!publicOnlyRoutes.includes(location.pathname)) {
+                    navigate("/")
+                }
             }
             console.log(e)
         }
     }
 
     useEffect(() => {
-        if (!userData) {
-            fetchUser()
-        }
+        fetchUser()
     }, [])
+
+    // Route protection logic
+    useEffect(() => {
+
+        if (userData && userData._id) {
+            if (publicOnlyRoutes.includes(location.pathname)) {
+                navigate("/feed")
+            }
+        }
+        // If user is NOT logged in and tries to access protected routes
+        else if (location.pathname !== "/" && !publicOnlyRoutes.includes(location.pathname)) {
+            navigate("/")
+        }
+    }, [location.pathname, userData])
 
     return (
         <div className="flex flex-col min-h-screen">
-            <NavBar />
+            {!hideNavbarFromRoutes.includes(location.pathname) && <NavBar />}
             <main className="flex-grow">
                 <Outlet />
             </main>

@@ -68,7 +68,7 @@ export const EditProfile = ({ user }) => {
             setShowToast(true)
             setTimeout(() => {
                 setShowToast(false)
-                navigate("/")
+                navigate("/feed")
             }, 2000)
         } catch (e) {
             setError(e.response.data)

@@ -15,15 +15,11 @@ const Jobs = lazy(() => import("./Pages/Jobs"))
 const AddJob = lazy(() => import("./Components/AddJob"))
 const Events = lazy(() => import("./Pages/Events"))
 const AddEvent = lazy(() => import("./Components/AddEvent"))
+const Landingpage = lazy(() => import("./Pages/LandingPage"))
 
 
 import { Navigate } from "react-router-dom";
 
-const PublicRoute = ({ element }) => {
-  const token = document.cookie.includes("token"); // Check if token exists
-
-  return token ? <Navigate to="/" /> : element;
-};
 
 
 
@@ -40,11 +36,14 @@ function App() {
       <Suspense fallback={LoadingFallback}>
         <Routes>
           <Route path="/" element={<Body />} >
-            <Route path="/login" element={<PublicRoute element={<Login />} />} />
+            <Route path="/login" element={<Login />} />
 
-            <Route path="/signup" element={<PublicRoute element={<SignUp />} />} />
+            <Route path="/signup" element={<SignUp />} />
 
-            <Route path="/" element={<Feed />} />
+            <Route path="/" element={<Landingpage />} />
+
+
+            <Route path="/feed" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
 
             <Route path="/connections" element={<Connections />} />
