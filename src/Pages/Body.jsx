@@ -15,7 +15,7 @@ const Body = () => {
 
     // Routes configuration
     const publicOnlyRoutes = ["/", "/login", "/signup"]
-    const hideFooterFromRoutes = ["/login", "/signup"]
+    const hideFooterFromRoutes = ["/login", "/signup", "/"]
     const hideNavbarFromRoutes = ["/"]
 
     const fetchUser = async () => {
