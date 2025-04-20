@@ -44,6 +44,7 @@ const Landingpage = () => {
                     <a href="#how-it-works" className="text-text-primary hover:text-primary transition-colors">How It Works</a>
 
                     <a href="#faq" className="text-text-primary hover:text-primary transition-colors">FAQ</a>
+                    <a href="#team" className="text-text-primary hover:text-primary transition-colors">Team</a>
                 </div>
                 <div className="flex space-x-3">
                     <button className="px-4 py-2 rounded-full bg-translucent-40 hover:bg-translucent-80 transition-all text-text-primary" onClick={() => navigate("/login")}>
@@ -470,7 +471,7 @@ const Landingpage = () => {
             </div>
         </section>
         {/* Team Section */}
-        <section className="pt-20 pb-5 bg-translucent-20">
+        <section className="pt-20 pb-5 bg-translucent-20" id='team'>
             <div className="container mx-auto px-4">
                 <motion.div
                     className="text-center mb-16"
