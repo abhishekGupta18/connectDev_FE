@@ -19,7 +19,7 @@ const NavBar = () => {
             const res = await axios.post(baseURL + "/logout", {}, { withCredentials: true })
             dispatch(removeUser())
             dispatch(removeFeed())
-            navigate("/login")
+            navigate("/")
         } catch (e) {
             console.log(e)
         }
@@ -34,7 +34,7 @@ const NavBar = () => {
             <div className="max-w-7xl mx-auto flex items-center justify-between">
                 {/* Logo */}
                 <div>
-                    <Link to="/" className="text-xl font-bold text-primary">connectdev</Link>
+                    <Link to="/feed" className="text-xl font-bold text-primary">connectdev</Link>
                 </div>
 
                 {/* Mobile Menu Button */}
