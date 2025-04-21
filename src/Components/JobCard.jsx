@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CalendarIcon, BriefcaseIcon, MapPinIcon, CurrencyDollarIcon, ClockIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import { CalendarIcon, BriefcaseIcon, MapPinIcon, CurrencyDollarIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 const JobCard = ({ jobInfo }) => {
     const {
@@ -11,12 +11,7 @@ const JobCard = ({ jobInfo }) => {
         experience,
         location,
         deadline
-    } = jobInfo
-    const [isExpanded, setIsExpanded] = useState(false);
-
-    const toggleExpand = () => {
-        setIsExpanded(!isExpanded);
-    };
+    } = jobInfo;
 
     // Safely parse the date with a fallback
     const parseDate = (dateString) => {
@@ -72,7 +67,7 @@ const JobCard = ({ jobInfo }) => {
         <div
             onClick={handleClick}
             className={`
-                relative group animate-fadeIn m-8 w-full max-w-lg mx-auto 
+                relative group animate-fadeIn m-8 w-full max-w-sm mx-auto 
                 backdrop-blur-md rounded-xl border border-primary shadow-lg 
                 transition-all duration-300 
                 ${isExpired() ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-200 hover:shadow-xl'}
@@ -80,7 +75,7 @@ const JobCard = ({ jobInfo }) => {
         >
             {/* Overlay for expired jobs */}
             {isExpired() && (
-                <div className="absolute inset-0 z-10 bg-black/30 flex items-center justify-center">
+                <div className="absolute inset-0 z-10 bg-black/30 flex items-center justify-center rounded-xl">
                     <span className="text-white text-lg font-bold">Job Expired</span>
                 </div>
             )}
@@ -90,10 +85,10 @@ const JobCard = ({ jobInfo }) => {
                 className={`
                     rounded-xl overflow-hidden bg-translucent-20 backdrop-blur-md 
                     border border-primary shadow-lg p-6 transition-all duration-300 
+                    flex flex-col h-full
                     ${isExpired() ? 'pointer-events-none' : 'hover:bg-translucent-30 hover:shadow-xl'}
                 `}
             >
-                {/* Rest of the existing component remains the same */}
                 {/* Company and role section */}
                 <div className="mb-4">
                     <h3 className="text-2xl font-bold text-text-primary mb-1">{role}</h3>
@@ -102,42 +97,17 @@ const JobCard = ({ jobInfo }) => {
                     </div>
                 </div>
 
-                {/* Description with expand/collapse functionality */}
-                <div className="mb-6">
-                    <div className="relative overflow-hidden"
-                        style={{ maxHeight: isExpanded ? 'none' : '4.5rem' }}>
+                {/* Scrollable description area with fixed height */}
+                <div className="mb-6 h-32">
+                    <div className="h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-primary scrollbar-track-transparent">
                         <p className="text-text-secondary">
                             {description}
                         </p>
-                        {!isExpanded && (
-                            <div className="absolute bottom-0 left-0 w-full h-8 
-                 bg-gradient-to-t from-translucent-20 to-transparent"></div>
-                        )}
                     </div>
-                    <button
-                        onClick={toggleExpand}
-                        disabled={isExpired()}
-                        className={`
-                            mt-2 flex items-center text-button-primary-text 
-                            hover:text-primary-focus text-sm font-medium 
-                            transition-colors
-                            ${isExpired() ? 'opacity-50 cursor-not-allowed' : ''}
-                        `}
-                    >
-                        {isExpanded ? (
-                            <>
-                                Read less <ChevronUpIcon className="w-4 h-4" />
-                            </>
-                        ) : (
-                            <>
-                                Read more <ChevronDownIcon className="w-4 h-4" />
-                            </>
-                        )}
-                    </button>
                 </div>
 
                 {/* Details section */}
-                <div className="mb-6">
+                <div className="mb-6 flex-grow">
                     <div className="flex flex-wrap -mx-2">
                         {/* Salary */}
                         <div className="px-2 w-full md:w-1/2 mb-3">
@@ -174,7 +144,7 @@ const JobCard = ({ jobInfo }) => {
                 </div>
 
                 {/* Apply button */}
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mt-auto">
                     <a
                         href={applyLink}
                         target='_blank'

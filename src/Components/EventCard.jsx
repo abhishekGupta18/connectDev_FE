@@ -43,7 +43,7 @@ export const EventCard = ({ event }) => {
 
     return (
         <div className={`
-            relative group animate-fadeIn m-8 w-full max-w-lg mx-auto 
+            relative group animate-fadeIn m-8 w-full max-w-sm mx-auto 
             backdrop-blur-md rounded-xl border border-primary shadow-lg 
             transition-all duration-300 h-96
             ${isPast ? 'opacity-50' : 'hover:bg-base-200 hover:shadow-xl'}

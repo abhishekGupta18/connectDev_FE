@@ -153,13 +153,13 @@ const Chat = () => {
                 <div className="flex items-center mb-4 border-b border-primary pb-2">
                     <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-primary mr-3">
                         <img
-                            src={targetUserDetails.photoUrl}
+                            src={targetUserDetails?.photoUrl}
                             alt="User"
                             className="w-full h-full object-cover"
                         />
                     </div>
                     <h1 className="text-2xl font-bold text-text-primary">
-                        Chats with {targetUserDetails.firstName + " " + targetUserDetails.lastName}
+                        Chats with {targetUserDetails?.firstName + " " + targetUserDetails?.lastName}
                     </h1>
                 </div>
 
