@@ -4,7 +4,7 @@ import { removeUserFromFeed } from "../utils/feedSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 
-export const UserCard = ({ user }) => {
+export const UserCard = ({ user, showButton }) => {
     const { _id, firstName, lastName, photoUrl, about, gender, age, skills, organization, isPremium, twitterUrl, githubUrl, linkedlnUrl, projectUrl } = user;
 
     const [showToast, setShowToast] = useState(false)
@@ -190,7 +190,7 @@ export const UserCard = ({ user }) => {
                 </div>
 
                 {/* Actions with improved button styling */}
-                <div className="p-5 mt-2 bg-white bg-opacity-10 backdrop-blur-md border-t border-white border-opacity-20">
+                {showButton && <div className="p-5 mt-2 bg-white bg-opacity-10 backdrop-blur-md border-t border-white border-opacity-20">
                     <div className="flex justify-center gap-4">
                         <button
                             className="px-6 py-2.5 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white text-sm font-medium rounded-full hover:shadow-lg transition-all duration-300 flex items-center gap-2 transform hover:scale-105"
@@ -211,7 +211,7 @@ export const UserCard = ({ user }) => {
                             Ignore
                         </button>
                     </div>
-                </div>
+                </div>}
             </div>
             {/* Toast notification */}
             {showToast && (

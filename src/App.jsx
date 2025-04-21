@@ -16,7 +16,7 @@ const AddJob = lazy(() => import("./Components/AddJob"))
 const Events = lazy(() => import("./Pages/Events"))
 const AddEvent = lazy(() => import("./Components/AddEvent"))
 const Landingpage = lazy(() => import("./Pages/LandingPage"))
-
+const UserProfile = lazy(() => import("./Pages/UserProfile"))
 
 import { Navigate } from "react-router-dom";
 
@@ -55,6 +55,7 @@ function App() {
             <Route path="/jobs/addJob" element={<AddJob />} />
             <Route path="/events" element={<Events />} />
             <Route path="/events/addEvent" element={<AddEvent />} />
+            <Route path="/user/:targetUserId" element={<UserProfile />} />
 
 
           </Route>

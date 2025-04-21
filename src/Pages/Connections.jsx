@@ -1,7 +1,7 @@
 import axios from "axios"
 import { baseURL } from "../utils/constant"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { addConnections } from "../utils/connectionSlice"
 
@@ -11,6 +11,7 @@ const Connections = () => {
     const dispatch = useDispatch()
 
     const connections = useSelector((store) => store.connection)
+    const navigate = useNavigate()
 
     const getUserConnections = async () => {
         try {
@@ -34,6 +35,12 @@ const Connections = () => {
     useEffect(() => {
         getUserConnections()
     }, [])
+
+    const showConnectionProfile = (id) => {
+        navigate("/user/" + id)
+    }
+
+
 
     if (isLoading) {
         return (
@@ -73,11 +80,12 @@ const Connections = () => {
                                 <img
                                     src={connection.photoUrl}
                                     alt={`${connection.firstName}'s profile picture`}
-                                    className="relative w-16 h-16 rounded-full object-cover border-2 border-badge"
+                                    className="relative w-16 h-16 rounded-full object-cover border-2 border-badge cursor-pointer"
+                                    onClick={() => showConnectionProfile(connection._id)}
                                 />
                             </div>
                             <div className="ml-4">
-                                <h3 className="text-lg font-semibold text-text-primary">
+                                <h3 className="text-lg font-semibold text-text-primary cursor-pointer" onClick={() => showConnectionProfile(connection._id)}>
                                     {connection.firstName} {connection.lastName}
                                 </h3>
                                 <p className="text-sm text-text-secondary mt-1 line-clamp-2">

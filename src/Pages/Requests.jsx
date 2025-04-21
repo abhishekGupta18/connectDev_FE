@@ -1,10 +1,12 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { baseURL } from "../utils/constant"
+import { useNavigate } from "react-router-dom"
 
 const Requests = () => {
     const [requests, setRequests] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const navigate = useNavigate()
 
     const getUserRequests = async () => {
         try {
@@ -31,9 +33,15 @@ const Requests = () => {
         }
     }
 
+
     useEffect(() => {
         getUserRequests()
     }, [])
+
+    const showRequestProfile = (id) => {
+        navigate("/user/" + id)
+    }
+
 
     if (isLoading) {
         return (
@@ -73,11 +81,12 @@ const Requests = () => {
                                 <img
                                     src={request.fromUserId.photoUrl}
                                     alt={`${request.fromUserId.firstName}'s profile picture`}
-                                    className="relative w-16 h-16 rounded-full object-cover border-2 border-badge"
+                                    className="relative w-16 h-16 rounded-full object-cover border-2 border-badge cursor-pointer"
+                                    onClick={() => showRequestProfile(request.fromUserId._id)}
                                 />
                             </div>
                             <div className="ml-4">
-                                <h3 className="text-lg font-semibold text-text-primary">
+                                <h3 className="text-lg font-semibold text-text-primary cursor-pointer" onClick={() => showRequestProfile(request.fromUserId._id)}>
                                     {request.fromUserId.firstName} {request.fromUserId.lastName}
                                 </h3>
                                 <p className="text-sm text-text-secondary mt-1 line-clamp-2">
