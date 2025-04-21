@@ -126,7 +126,7 @@ const NavBar = () => {
                     >
                         Requests
                     </Link>
-                    {!user.isPremiumb && <Link
+                    {user.isPremiumb && <Link
                         to="/premium"
                         className="block py-2 text-text-primary hover:text-primary"
                         onClick={() => setIsMobileMenuOpen(false)}
