@@ -52,7 +52,7 @@ const Feed = () => {
             </h1>
 
             <div className="max-w-4xl mx-auto px-4">
-                {feed && feed[0] && <UserCard user={feed[0]} />}
+                {feed && feed[0] && <UserCard user={feed[0]} showButton={true} />}
             </div>
         </div>
     );
