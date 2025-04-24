@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRef, useState } from "react";
 import { baseURL } from "../utils/constant";
+import { useNavigate } from "react-router-dom";
 
 const AddEvent = () => {
 
@@ -10,9 +11,11 @@ const AddEvent = () => {
     const [eventStartTime, setEventStartTime] = useState("");
     const [eventEndTime, setEventEndTime] = useState("");
     const [location, setLocation] = useState("");
-    const [registrationLink, setRegistrationLink] = useState(""); 1
+    const [registrationLink, setRegistrationLink] = useState("");
 
     const [showToast, setShowToast] = useState(false)
+    const [disableBtn, setDisableBtn] = useState(false)
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
 
@@ -23,9 +26,11 @@ const AddEvent = () => {
             const res = await axios.post(baseURL + "/add/event", { eventName, description, eventStartTime, eventEndTime, location, registrationLink }, { withCredentials: true })
 
             setShowToast(true)
+            setDisableBtn(true)
             setTimeout(() => {
                 setShowToast(false)
                 resetForm()
+                navigate("/events")
 
             }, 2000)
 
@@ -159,6 +164,7 @@ const AddEvent = () => {
                     <button
                         type="submit"
                         className="btn btn-primary text-white animate-fadeIn"
+                        disabled={disableBtn}
                     >
                         Submit Event
                     </button>

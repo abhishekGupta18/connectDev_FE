@@ -6,20 +6,25 @@ import { showJobs } from "../utils/jobSlice"
 import JobCard from "../Components/JobCard"
 import { Link } from "react-router-dom"
 import Premium from "../Components/Premium"
+import { Loader2 } from "lucide-react"
 
 const Jobs = () => {
     const dispatch = useDispatch()
     const jobs = useSelector((store) => store.jobs)
     const [showTooltip, setShowTooltip] = useState(false);
+    const [isLoading, setIsLoading] = useState(true)
 
     const user = useSelector((store) => store.user)
 
     const fetchAllJobs = async () => {
         try {
+            setIsLoading(true)
             const res = await axios.get(baseURL + "/jobs", { withCredentials: true })
             dispatch(showJobs(res.data.data))
         } catch (e) {
             console.log(e)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -52,6 +57,16 @@ const Jobs = () => {
     }, []); // Empty dependency array to run once on mount
 
 
+    if (isLoading) {
+        return (
+            <div className="flex flex-col justify-center items-center min-h-[50vh]">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                <p className="mt-4 text-text-secondary font-medium">Loading jobs...</p>
+            </div>
+        )
+    }
+
+
     if (!user?.isPremium) return <Premium />
 
     return (
@@ -60,7 +75,7 @@ const Jobs = () => {
                 {jobs && jobs.map((job) => <JobCard key={job._id} jobInfo={job} />)}
             </div>
 
-            <div className="fixed right-10 bottom-10 z-10">
+            <div className="fixed right-10 top-40 z-10">
                 <Link to="/jobs/addJob">
                     <button type="button" className="bg-primary text-white rounded-full p-2 border-2 border-white shadow-md">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-8">

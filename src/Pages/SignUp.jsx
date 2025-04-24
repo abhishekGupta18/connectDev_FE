@@ -244,7 +244,7 @@ const SignUp = () => {
                             `}</style>
                             <div className="flex flex-col items-center w-full">
                                 <h3 className="font-bold text-lg text-text-primary mb-1">Authenticate Your Account</h3>
-                                <p className="text-text-secondary text-sm text-center mb-4">Please enter the code sent to your email.Otp will expire after 4 min</p>
+                                <p className="text-text-secondary text-sm text-center mb-4">Please enter the code sent to your email. Otp will expire after 4 minutes</p>
 
 
                                 <div className="flex justify-center my-2">

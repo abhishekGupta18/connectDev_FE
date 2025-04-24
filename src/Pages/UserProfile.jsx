@@ -7,7 +7,7 @@ import { UserCard } from "../Components/UserCard"
 const UserProfile = () => {
 
     const { targetUserId } = useParams()
-    console.log(targetUserId)
+
     const [showUser, setShowUser] = useState()
 
     const getUserDetails = async () => {
@@ -26,7 +26,7 @@ const UserProfile = () => {
     useEffect(() => {
         getUserDetails()
     }, [])
-    console.log(showUser)
+
 
 
     return <div className="container mx-auto py-8">

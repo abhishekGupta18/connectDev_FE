@@ -4,9 +4,9 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { addConnections } from "../utils/connectionSlice"
+import { Loader2 } from "lucide-react"
 
 const Connections = () => {
-
     const [isLoading, setIsLoading] = useState(true)
     const dispatch = useDispatch()
 
@@ -25,6 +25,7 @@ const Connections = () => {
             const [res] = await Promise.all([fetchData, minLoadingTime]);
 
             dispatch(addConnections(res.data.data));
+
         } catch (e) {
             console.error(e);
         } finally {
@@ -40,12 +41,11 @@ const Connections = () => {
         navigate("/user/" + id)
     }
 
-
-
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center min-h-[50vh]">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            <div className="flex flex-col justify-center items-center min-h-[50vh]">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                <p className="mt-4 text-text-secondary font-medium">Loading connections...</p>
             </div>
         )
     }

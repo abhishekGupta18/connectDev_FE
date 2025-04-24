@@ -2,6 +2,8 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { baseURL } from "../utils/constant"
 import { useNavigate } from "react-router-dom"
+import { Loader2 } from "lucide-react"
+
 
 const Requests = () => {
     const [requests, setRequests] = useState([])
@@ -45,8 +47,9 @@ const Requests = () => {
 
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center min-h-[50vh]">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            <div className="flex flex-col justify-center items-center min-h-[50vh]">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                <p className="mt-4 text-text-secondary font-medium">Loading requests...</p>
             </div>
         )
     }

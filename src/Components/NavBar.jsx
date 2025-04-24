@@ -12,8 +12,6 @@ const NavBar = () => {
     const user = useSelector((store) => store.user)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-
-
     const handleLogout = async () => {
         try {
             const res = await axios.post(baseURL + "/logout", {}, { withCredentials: true })
@@ -49,9 +47,12 @@ const NavBar = () => {
                     </button>
                 )}
 
-                {/* Desktop Navigation Links */}
+                {/* Desktop Navigation Links - Centered */}
                 {user && (
-                    <div className="hidden md:flex space-x-6">
+                    <div className="hidden md:flex space-x-6 absolute left-1/2 transform -translate-x-1/2">
+                        <Link to="/feed" className="text-text-primary hover:text-primary transition-colors">
+                            Home
+                        </Link>
                         <Link to="/profile" className="text-text-primary hover:text-primary transition-colors">
                             Profile
                         </Link>
@@ -76,27 +77,26 @@ const NavBar = () => {
                     </div>
                 )}
 
-                {/* User Avatar */}
+                {/* User Avatar with Inline Dropdown */}
                 {user && (
-                    <div className="relative group hidden md:block">
-                        <button className="flex items-center focus:outline-none">
-                            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
-                                <img
-                                    src={user.photoUrl}
-                                    alt="User"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                        </button>
-
-                        {/* Dropdown Menu - Only Logout Option */}
-                        <div className="absolute right-0 mt-2 w-48 bg-base-200 backdrop-blur-md rounded-box shadow-lg py-1 z- invisible group-hover:visible transition-all">
+                    <div className="hidden md:flex items-center space-x-2 group">
+                        {/* Dropdown appears inline to the left of the photo */}
+                        <div className="invisible group-hover:visible transition-all">
                             <button
                                 onClick={handleLogout}
-                                className="block w-full text-left px-4 py-2 text-sm text-text-primary "
+                                className="px-3 py-1 text-sm text-text-primary hover:text-primary rounded-md border border-primary"
                             >
                                 Logout
                             </button>
+                        </div>
+
+                        {/* User Photo */}
+                        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
+                            <img
+                                src={user.photoUrl}
+                                alt="User"
+                                className="w-full h-full object-cover"
+                            />
                         </div>
                     </div>
                 )}
@@ -105,6 +105,13 @@ const NavBar = () => {
             {/* Mobile Menu */}
             {user && isMobileMenuOpen && (
                 <div className="md:hidden mt-4 py-2 border-t border-primary">
+                    <Link
+                        to="/feed"
+                        className="block py-2 text-text-primary hover:text-primary"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        Home
+                    </Link>
                     <Link
                         to="/profile"
                         className="block py-2 text-text-primary hover:text-primary"
@@ -126,7 +133,7 @@ const NavBar = () => {
                     >
                         Requests
                     </Link>
-                    {user.isPremiumb && <Link
+                    {!user.isPremium && <Link
                         to="/premium"
                         className="block py-2 text-text-primary hover:text-primary"
                         onClick={() => setIsMobileMenuOpen(false)}
@@ -156,8 +163,6 @@ const NavBar = () => {
                     >
                         Events
                     </Link>
-
-
 
                     <div className="flex items-center justify-between py-2">
                         <div className="flex items-center">

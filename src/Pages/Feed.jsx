@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import { UserCard } from "../Components/UserCard";
+import { Loader2 } from "lucide-react";
 
 const Feed = () => {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Feed = () => {
             setIsLoading(true);
             const res = await axios.get(baseURL + "/feed", { withCredentials: true });
             dispatch(addFeed(res.data));
+
         } catch (e) {
             console.error(e);
         } finally {
@@ -26,7 +28,6 @@ const Feed = () => {
     useEffect(() => {
         userFeed();
     }, []);
-
 
 
     if (!feed || feed.length <= 0) {

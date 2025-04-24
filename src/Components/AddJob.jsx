@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRef, useState } from "react"
 import { baseURL } from "../utils/constant";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -16,6 +17,8 @@ const AddJob = () => {
     const [deadline, setDeadline] = useState("")
 
     const [showToast, setShowToast] = useState(false)
+    const [disableBtn, setDisableBtn] = useState(false)
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,9 +26,11 @@ const AddJob = () => {
 
             const res = await axios.post(baseURL + "/jobs/post", { company, role, description, salary, applyLink, experience, location, deadline }, { withCredentials: true })
             setShowToast(true)
+            setDisableBtn(true)
             setTimeout(() => {
                 setShowToast(false)
                 resetForm()
+                navigate("/jobs")
 
             }, 2000)
 
@@ -194,6 +199,7 @@ const AddJob = () => {
                     <button
                         type="submit"
                         className="btn btn-primary text-white animate-fadeIn"
+                        disabled={disableBtn}
                     >
                         Submit Job Posting
                     </button>
