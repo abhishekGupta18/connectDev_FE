@@ -494,9 +494,9 @@ const Landingpage = () => {
                     viewport={{ once: true }}
                 >
                     <div className="flex flex-col md:flex-row gap-8 items-center">
-                        <div className="md:w-1/3">
+                        <div className="md:w-2/3">
                             <img
-                                src="https://avatars.githubusercontent.com/u/112747867?v=4"
+                                src="https://res.cloudinary.com/dmmqvo37i/image/upload/v1745582143/photo_devfest_z78mvn.jpg"
                                 alt="Abhishek Gupta"
                                 className="rounded-xl shadow-lg w-full max-w-xs mx-auto transform hover:scale-105 transition-all duration-300"
                             />

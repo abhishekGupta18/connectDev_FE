@@ -34,17 +34,17 @@ const Body = () => {
         }
     }
 
-    // Initial data fetch - runs only once
+
     useEffect(() => {
         fetchUser()
     }, [])
 
-    // Route protection logic
+
     useEffect(() => {
-        // Wait until authentication check is complete
+
         if (!authChecked) return
 
-        // User is logged in
+
         if (userData && userData._id) {
             // Redirect away from public-only routes
             if (publicOnlyRoutes.includes(location.pathname)) {
@@ -53,7 +53,7 @@ const Body = () => {
         }
         // User is NOT logged in
         else {
-            // Redirect away from protected routes
+
             if (!publicOnlyRoutes.includes(location.pathname)) {
                 navigate("/")
             }
