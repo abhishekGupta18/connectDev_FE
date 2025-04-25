@@ -60,7 +60,16 @@ const AskAI = () => {
         }
     };
 
-    if (!user?.isPremium) return <Premium />
+    if (!user?.isPremium) return <div className="min-h-screen pb-10">
+        <div className="text-center py-8">
+            <h2 className="text-2xl font-bold text-primary mb-4">Premium Required</h2>
+            <p className="text-gray-600 ">
+                Purchase Premium to access ask AI feature.
+            </p>
+        </div>
+
+        <Premium />
+    </div>
 
     return (
         <div className="max-w-2xl mx-auto mt-16 h-[500px] bg-translucent-30 backdrop-blur-md rounded-xl shadow-lg overflow-hidden flex flex-col">

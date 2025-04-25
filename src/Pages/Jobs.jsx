@@ -67,7 +67,16 @@ const Jobs = () => {
     }
 
 
-    if (!user?.isPremium) return <Premium />
+    if (!user?.isPremium) return <div className="min-h-screen pb-10">
+        <div className="text-center py-8">
+            <h2 className="text-2xl font-bold text-primary mb-4">Premium Required</h2>
+            <p className="text-gray-600 ">
+                Purchase Premium to access all job listings and opportunities.
+            </p>
+        </div>
+
+        <Premium />
+    </div>
 
     return (
         <div className="relative">

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux"
 import { addUser } from "../utils/userSlice"
 
 import { InputOtp } from 'primereact/inputotp';
+import { Loader2 } from "lucide-react"
 
 
 const SignUp = () => {
@@ -16,6 +17,7 @@ const SignUp = () => {
     const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [otpBox, setOtpBox] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -31,6 +33,9 @@ const SignUp = () => {
 
     const handleSignup = async () => {
         try {
+
+            setOtpBox(false)
+            setIsLoading(true)
             const res = await axios.post(baseURL + "/signup", { firstName, lastName, email, password }, { withCredentials: true })
 
             dispatch(addUser(res.data.data))
@@ -39,6 +44,8 @@ const SignUp = () => {
             setError(e.response?.data || "Signup failed")
             setOtpBox(false)
             console.error(e.response?.data)
+        } finally {
+            setIsLoading(false)
         }
     }
 

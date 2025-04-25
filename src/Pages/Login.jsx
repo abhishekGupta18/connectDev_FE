@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux"
 import { addUser } from "../utils/userSlice"
 import { useNavigate } from "react-router-dom"
 import { baseURL } from "../utils/constant"
+import { Loader2 } from "lucide-react"
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -110,12 +111,19 @@ const Login = () => {
 
                     {error && <p className="text-error text-sm mt-1 mb-4">{error}</p>}
 
-                    <button
+                    {!isloading ? <button
                         className="btn btn-primary text-primary-content w-full rounded-btn mt-2"
                         onClick={handleClick}
                     >
                         Login
-                    </button>
+                    </button> :
+
+                        <div className="flex flex-col justify-center items-center">
+                            <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                            <p className="mt-4 text-text-secondary font-medium">Loging In...</p>
+                        </div>
+
+                    }
 
                     <div className="divider text-text-secondary text-sm">OR</div>
 
