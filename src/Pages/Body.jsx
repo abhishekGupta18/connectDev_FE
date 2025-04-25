@@ -4,7 +4,7 @@ import axios from "axios"
 import { baseURL } from "../utils/constant"
 import { useDispatch, useSelector } from "react-redux"
 import { addUser } from "../utils/userSlice"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Footer from "../Components/Footer"
 
 const Body = () => {
@@ -12,6 +12,7 @@ const Body = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation()
+    const [authChecked, setAuthChecked] = useState(false)
 
     // Routes configuration
     const publicOnlyRoutes = ["/", "/login", "/signup"]
@@ -22,38 +23,42 @@ const Body = () => {
         try {
             const res = await axios.get(baseURL + "/profile/view", { withCredentials: true })
             dispatch(addUser(res.data))
-
-
-            if (publicOnlyRoutes.includes(location.pathname)) {
-                navigate("/feed")
-            }
+            setAuthChecked(true)
         } catch (e) {
+            // Clear user data on authentication errors
             if (e.response && e.response.status === 401) {
-                if (!publicOnlyRoutes.includes(location.pathname)) {
-                    navigate("/")
-                }
+                dispatch(addUser(null))
             }
+            setAuthChecked(true)
             console.log(e)
         }
     }
 
+    // Initial data fetch - runs only once
     useEffect(() => {
         fetchUser()
     }, [])
 
     // Route protection logic
     useEffect(() => {
+        // Wait until authentication check is complete
+        if (!authChecked) return
 
+        // User is logged in
         if (userData && userData._id) {
+            // Redirect away from public-only routes
             if (publicOnlyRoutes.includes(location.pathname)) {
                 navigate("/feed")
             }
         }
-        // If user is NOT logged in and tries to access protected routes
-        else if (location.pathname !== "/" && !publicOnlyRoutes.includes(location.pathname)) {
-            navigate("/")
+        // User is NOT logged in
+        else {
+            // Redirect away from protected routes
+            if (!publicOnlyRoutes.includes(location.pathname)) {
+                navigate("/")
+            }
         }
-    }, [location.pathname, userData])
+    }, [location.pathname, userData, authChecked, navigate])
 
     return (
         <div className="flex flex-col min-h-screen">
