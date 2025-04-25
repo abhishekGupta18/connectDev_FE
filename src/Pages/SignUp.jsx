@@ -17,7 +17,7 @@ const SignUp = () => {
     const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [otpBox, setOtpBox] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -33,9 +33,7 @@ const SignUp = () => {
 
     const handleSignup = async () => {
         try {
-
             setOtpBox(false)
-            setIsLoading(true)
             const res = await axios.post(baseURL + "/signup", { firstName, lastName, email, password }, { withCredentials: true })
 
             dispatch(addUser(res.data.data))
@@ -44,27 +42,26 @@ const SignUp = () => {
             setError(e.response?.data || "Signup failed")
             setOtpBox(false)
             console.error(e.response?.data)
-        } finally {
-            setIsLoading(false)
         }
     }
 
     const handleSendOtp = async () => {
         try {
             setError("")
+            setIsLoading(true)
             const res = await axios.post(baseURL + "/send-otp", { firstName, lastName, email, password }, { withCredentials: true })
+
             setOtpBox(true)
             setTimeout(() => {
-
                 setOtpBox(false)
-
             }, 240000);
 
-
-
         } catch (e) {
+            setIsLoading(false)
             console.log(e.response.data.error)
             setError(e.response.data.error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -167,14 +164,13 @@ const SignUp = () => {
 
                     {error && <p className="text-error text-sm mt-1 mb-4">{error}</p>}
 
-                    {!otpBox && <button
-                        className="btn btn-primary text-primary-content w-full rounded-btn mt-2"
-                        onClick={handleSendOtp}
-                    >
-                        Sign Up
-                    </button>}
-
-                    {otpBox &&
+                    {/* Show loading spinner, sign up button, or OTP box based on state */}
+                    {isLoading ? (
+                        <div className="flex flex-col justify-center items-center">
+                            <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                            <p className="mt-4 text-text-secondary font-medium">Sending OTP...</p>
+                        </div>
+                    ) : otpBox ? (
                         <div className="card otp-container">
                             <style jsx>{`
                                 @keyframes smoothFadeIn {
@@ -251,8 +247,7 @@ const SignUp = () => {
                             `}</style>
                             <div className="flex flex-col items-center w-full">
                                 <h3 className="font-bold text-lg text-text-primary mb-1">Authenticate Your Account</h3>
-                                <p className="text-text-secondary text-sm text-center mb-4">Please enter the code sent to your email. Otp will expire after 4 minutes</p>
-
+                                <p className="text-text-secondary text-sm text-center mb-4">Please enter the code sent to your email. OTP will expire after 4 minutes</p>
 
                                 <div className="flex justify-center my-2">
                                     <InputOtp
@@ -263,21 +258,24 @@ const SignUp = () => {
                                     />
                                 </div>
 
-
-
-
-
                                 <div className="flex justify-between w-full mt-3">
                                     <button className="resend-button" onClick={handleSendOtp}>
                                         Resend Code
                                     </button>
                                     <button className="submit-button" onClick={handleVerifyOtp}>
-                                        Submit Otp
+                                        Submit OTP
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    }
+                    ) : (
+                        <button
+                            className="btn btn-primary text-primary-content w-full rounded-btn mt-2"
+                            onClick={handleSendOtp}
+                        >
+                            Sign Up
+                        </button>
+                    )}
 
                     <div className="divider text-text-secondary text-sm">OR</div>
 
