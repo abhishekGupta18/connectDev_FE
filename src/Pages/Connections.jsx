@@ -16,15 +16,13 @@ const Connections = () => {
     const getUserConnections = async () => {
         try {
             setIsLoading(true);
-            // Ensure the loader is visible for at least 500ms
-            const minLoadingTime = new Promise(resolve => setTimeout(resolve, 500));
+
+
 
             const fetchData = axios.get(baseURL + "/user/connections", { withCredentials: true });
 
-            // Wait for both the API call and minimum loading time
-            const [res] = await Promise.all([fetchData, minLoadingTime]);
-
-            dispatch(addConnections(res.data.data));
+            console.log(fetchData)
+            dispatch(addConnections(fetchData.data.data));
 
         } catch (e) {
             console.error(e);
@@ -40,6 +38,9 @@ const Connections = () => {
     const showConnectionProfile = (id) => {
         navigate("/user/" + id)
     }
+
+    console.log(connections)
+
 
     if (isLoading) {
         return (
@@ -69,7 +70,7 @@ const Connections = () => {
             </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {connections.map((connection) => (
+                {connections && connections.map((connection) => (
                     <div
                         key={connection._id}
                         className="backdrop-blur-md bg-base-300 rounded-xl border border-primary shadow-lg p-6 transition-all duration-300 hover:bg-base-200 hover:shadow-xl"
@@ -81,7 +82,7 @@ const Connections = () => {
                                     src={connection.photoUrl}
                                     alt={`${connection.firstName}'s profile picture`}
                                     className="relative w-16 h-16 rounded-full object-cover border-2 border-badge cursor-pointer"
-                                    onClick={() => showConnectionProfile(connection._id)}
+                                    onClick={() => showConnectionProfile(connection?._id)}
                                 />
                             </div>
                             <div className="ml-4">
