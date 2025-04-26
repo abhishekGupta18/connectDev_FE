@@ -85,6 +85,7 @@ const Requests = () => {
                                     src={request.fromUserId.photoUrl}
                                     alt={`${request.fromUserId.firstName}'s profile picture`}
                                     className="relative w-16 h-16 rounded-full object-cover border-2 border-badge cursor-pointer"
+                                    style={{ aspectRatio: "1/1" }}
                                     onClick={() => showRequestProfile(request.fromUserId._id)}
                                 />
                             </div>
