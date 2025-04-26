@@ -4,6 +4,7 @@ import { createSocketConnection } from "../utils/socket"
 import { useSelector } from "react-redux"
 import axios from "axios"
 import { baseURL } from "../utils/constant"
+import { Loader2 } from "lucide-react"
 
 const Chat = () => {
 
@@ -12,6 +13,7 @@ const Chat = () => {
     const [sendMessage, setSendMessage] = useState([])
     const [newMsg, setNewMsg] = useState("")
     const [targetUserDetails, setTargetUserDetails] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
     const user = useSelector((store) => store.user)
     const userId = user?._id
     const firstName = user?.firstName
@@ -20,7 +22,7 @@ const Chat = () => {
 
     const getUserConnections = async () => {
         try {
-
+            setIsLoading(true)
             const res = await axios.get(baseURL + "/user/connections", { withCredentials: true })
             const targetUser = res.data.data.find((connection) => connection._id == targetUserId)
             setTargetUserDetails(targetUser)
@@ -28,12 +30,16 @@ const Chat = () => {
 
         } catch (e) {
             console.error(e)
+        } finally {
+            setIsLoading(false)
         }
     }
 
 
     const getChatHistory = async () => {
         try {
+
+            setIsLoading(true)
 
             const chats = await axios.get(baseURL + "/chat/" + targetUserId, { withCredentials: true })
 
@@ -49,6 +55,8 @@ const Chat = () => {
 
         } catch (e) {
             console.log(e)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -146,11 +154,20 @@ const Chat = () => {
         return msgFirstName === firstName;
     };
 
+    if (isLoading) {
+        return (
+            <div className="flex flex-col justify-center items-center min-h-[50vh]">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                <p className="mt-4 text-text-secondary font-medium">Loading chats...</p>
+            </div>
+        )
+    }
+
     return (
         <div className="flex flex-col h-screen max-w-4xl mx-auto p-4 bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end">
             <div className="backdrop-blur-lg bg-translucent-30 rounded-xl shadow-lg p-4 flex flex-col h-full">
                 {/* Replace the current profile photo and header section with this */}
-                <div className="flex items-center mb-4 border-b border-primary pb-2">
+                {isLoading ? <Loader2 className="h-12 w-12 animate-spin text-primary" /> : <div className="flex items-center mb-4 border-b border-primary pb-2">
                     <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-primary mr-3">
                         <img
                             src={targetUserDetails?.photoUrl}
@@ -161,7 +178,7 @@ const Chat = () => {
                     <h1 className="text-2xl font-bold text-text-primary">
                         Chats with {targetUserDetails?.firstName + " " + targetUserDetails?.lastName}
                     </h1>
-                </div>
+                </div>}
 
                 <div ref={chatContainer} className="flex-1 overflow-y-auto pr-2 mb-4 space-y-3">
                     {sendMessage.length === 0 ? (

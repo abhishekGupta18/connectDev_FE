@@ -47,8 +47,13 @@ const Login = () => {
                 setError("Login successful but no user data received");
             }
         } catch (e) {
-            console.error("Login error:", e);
-            setError(e.response?.data || "Login failed");
+            console.error("Error during login:", e);
+
+            if (e.response && e.response.data) {
+                setError(e.response.data.error || "Login failed.");
+            } else {
+                setError("Something went wrong. Please try again.");
+            }
         } finally {
             setIsLoading(false);
         }
