@@ -19,9 +19,9 @@ const Connections = () => {
 
 
 
-            const fetchData = axios.get(baseURL + "/user/connections", { withCredentials: true });
+            const fetchData = await axios.get(baseURL + "/user/connections", { withCredentials: true });
 
-            console.log(fetchData)
+            console.log(fetchData.data.data)
             dispatch(addConnections(fetchData.data.data));
 
         } catch (e) {
@@ -39,7 +39,7 @@ const Connections = () => {
         navigate("/user/" + id)
     }
 
-    console.log(connections)
+
 
 
     if (isLoading) {
@@ -70,7 +70,7 @@ const Connections = () => {
             </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {connections && connections.map((connection) => (
+                {connections.map((connection) => (
                     <div
                         key={connection._id}
                         className="backdrop-blur-md bg-base-300 rounded-xl border border-primary shadow-lg p-6 transition-all duration-300 hover:bg-base-200 hover:shadow-xl"
